@@ -143,6 +143,7 @@
     "js-yaml-loader": "^1.2.2",
     "json-bigint": "^1.0.0",
     "json-stringify-pretty-compact": "^2.0.0",
+    "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "match-sorter": "^6.1.0",
