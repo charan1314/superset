@@ -442,6 +442,12 @@ const config = {
         test: /\.geojson$/,
         type: 'asset/resource',
       },
+      {
+        test: /\.m?js/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
     ],
   },
   externals: {

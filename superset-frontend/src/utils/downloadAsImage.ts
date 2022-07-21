@@ -18,6 +18,7 @@
  */
 import { SyntheticEvent } from 'react';
 import domToImage from 'dom-to-image-more';
+import jsPDF from 'jspdf';
 import kebabCase from 'lodash/kebabCase';
 import { t } from '@superset-ui/core';
 import { addWarningToast } from 'src/components/MessageToasts/actions';
@@ -83,8 +84,12 @@ export default function downloadAsImage(
       .then(dataUrl => {
         const link = document.createElement('a');
         link.download = `${generateFileStem(description)}.jpg`;
-        link.href = dataUrl;
-        link.click();
+        const pdf = new jsPDF();
+        const imgProps = pdf.getImageProperties(dataUrl);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`${description}.pdf`);
       })
       .catch(e => {
         console.error('Creating image failed', e);
