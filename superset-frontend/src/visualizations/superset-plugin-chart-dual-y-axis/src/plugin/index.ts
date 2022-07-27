@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -34,12 +35,6 @@ export default class SupersetPluginChartDualYAxis extends ChartPlugin {
    * (pivoting, rolling aggregations, sorting etc) or submitting multiple queries.
    */
   constructor() {
-    const metadata = new ChartMetadata({
-      description: 'Superset Plugin Chart Dual Y Axis',
-      name: t('Dual Y Axis'),
-      thumbnail,
-    });
-
     super({
       buildQuery,
       controlPanel,

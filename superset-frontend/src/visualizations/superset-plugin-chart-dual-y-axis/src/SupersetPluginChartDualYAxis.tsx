@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -57,7 +58,7 @@ function SupersetPluginChartDualYAxis(
   let chartCols: [] = [];
   const colors = ['#5470C6', '#EE6666', '#91CC75'];
   const newBarColors = ['#08c', '#fdab3c', '#A6A6A6FF', '#004765'];
-  const barChartConfig = name => ({
+  const barChartConfig = (name: any) => ({
     nameLocation: 'center',
     nameTextStyle: {
       padding: [15, 0],
@@ -71,7 +72,7 @@ function SupersetPluginChartDualYAxis(
     },
   });
 
-  const lineChartConfig = name => ({
+  const lineChartConfig = (name: any) => ({
     nameLocation: 'center',
     nameTextStyle: {
       padding: [10, 0],
@@ -85,7 +86,7 @@ function SupersetPluginChartDualYAxis(
     },
   });
 
-  const xAxisConfig = axisData => ({
+  const xAxisConfig = (axisData: any) => ({
     type: 'category',
     axisTick: {
       alignWithLabel: true,
@@ -93,13 +94,13 @@ function SupersetPluginChartDualYAxis(
     data: axisData,
   });
 
-  const seriesBarData = (name, data) => ({
+  const seriesBarData = (name: string, data: []) => ({
     name,
     type: 'bar',
     data,
   });
 
-  const seriesLineData = (name, data) => ({
+  const seriesLineData = (name: string, data: []) => ({
     name,
     type: 'line',
     data,
@@ -132,7 +133,7 @@ function SupersetPluginChartDualYAxis(
   };
 
   // Often, you just want to get a hold of the DOM and go nuts.
-  function assignBarColors(data) {
+  function assignBarColors(data: []) {
     const tempData: [] = [];
     data.map((colValue, index) => {
       const dataObject = {
@@ -141,8 +142,7 @@ function SupersetPluginChartDualYAxis(
           color: newBarColors[index],
         },
       };
-      // @ts-ignore
-      tempData.push(dataObject);
+      return tempData.push(dataObject);
     });
     return tempData;
   }
@@ -159,9 +159,7 @@ function SupersetPluginChartDualYAxis(
         colName => colName !== formData.xValues[0],
       );
       chartCols.map((colData, index) => {
-        data.map(colValue => {
-          chartData.push(colValue[colData]);
-        });
+        data.map((colValue: any) => chartData.push(colValue[colData]));
         if (index + 1 !== chartCols.length) {
           chartData = assignBarColors(chartData);
           options.yAxis.push(barChartConfig(colData));
@@ -171,12 +169,11 @@ function SupersetPluginChartDualYAxis(
           options.series.push(seriesLineData(colData, chartData));
         }
         chartData = [];
+        return options;
       });
     }
     if (formData.xValues.length) {
-      data.map(colValue => {
-        chartData.push(colValue[formData.xValues[0]]);
-      });
+      data.map(colValue => chartData.push(colValue[formData.xValues[0]]));
       options.xAxis.push(xAxisConfig(chartData));
       chartData = [];
     }
