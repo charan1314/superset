@@ -217,6 +217,13 @@ export default function TableChart<D extends DataRecord = DataRecord>(
   // keep track of whether column order changed, so that column widths can too
   const [columnOrderToggle, setColumnOrderToggle] = useState(false);
 
+  const FixedColumn = styled.th`
+    position: sticky;
+    right: 0;
+    padding: 11px 16px;
+    boxshadow: 0px 4px 4px 0px #999;
+  `;
+
   const handleChange = useCallback(
     (filters: { [x: string]: DataRecordValue[] }) => {
       if (!emitFilter) {
@@ -411,7 +418,19 @@ export default function TableChart<D extends DataRecord = DataRecord>(
                   colorPositiveNegative,
                 })
               : undefined)};
-            white-space: ${value instanceof Date ? 'nowrap' : undefined};
+            white-space: nowrap;
+          `;
+          //Added styles for extra long table cells for ellipsis
+          const StyledLongCell = styled.div`
+            whitespace: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+            display: inline-block;
+            &:hover {
+              overflow: visible;
+              white-space: normal;
+            }
           `;
 
           const cellProps = {
@@ -455,7 +474,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
                   {text}
                 </div>
               ) : (
-                text
+                <StyledLongCell>{text}</StyledLongCell>
               )}
             </StyledCell>
           );
