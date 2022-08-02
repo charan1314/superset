@@ -48,7 +48,7 @@ export default styled.div`
       td:first-child {
         position: sticky;
         left: 0;
-        top: 0;
+        top: auto;
         z-index: 50;
         background-color: white;
       }
