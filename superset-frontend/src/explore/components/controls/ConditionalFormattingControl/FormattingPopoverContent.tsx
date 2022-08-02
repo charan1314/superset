@@ -21,7 +21,7 @@ import { styled, SupersetTheme, t, useTheme } from '@superset-ui/core';
 import { Form, FormItem, FormProps } from 'src/components/Form';
 import Select from 'src/components/Select/Select';
 import { Col, Row } from 'src/components';
-import { InputNumber } from 'src/components/Input';
+import { Input } from 'src/components/Input';
 import Button from 'src/components/Button';
 import {
   COMPARATOR,
@@ -29,7 +29,7 @@ import {
   MULTIPLE_VALUE_COMPARATORS,
 } from './types';
 
-const FullWidthInputNumber = styled(InputNumber)`
+const FullWidthInput = styled(Input)`
   width: 100%;
 `;
 
@@ -147,7 +147,7 @@ const renderOperatorFields = ({ getFieldValue }: GetFieldValue) =>
           validateTrigger="onBlur"
           trigger="onBlur"
         >
-          <FullWidthInputNumber />
+          <FullWidthInput />
         </FormItem>
       </Col>
       <Col span={6}>{operatorField}</Col>
@@ -160,7 +160,7 @@ const renderOperatorFields = ({ getFieldValue }: GetFieldValue) =>
           validateTrigger="onBlur"
           trigger="onBlur"
         >
-          <FullWidthInputNumber />
+          <FullWidthInput />
         </FormItem>
       </Col>
     </Row>
@@ -173,7 +173,7 @@ const renderOperatorFields = ({ getFieldValue }: GetFieldValue) =>
           label={t('Target value')}
           rules={rulesRequired}
         >
-          <FullWidthInputNumber />
+          <FullWidthInput />
         </FormItem>
       </Col>
     </Row>

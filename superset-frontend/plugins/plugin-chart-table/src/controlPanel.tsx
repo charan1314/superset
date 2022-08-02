@@ -523,12 +523,13 @@ const config: ControlPanelConfig = {
                   : explore?.datasource?.columns ?? {};
                 const { colnames, coltypes } =
                   chart?.queriesResponse?.[0] ?? {};
-                const numericColumns =
+                const numericAndStringColumns =
                   Array.isArray(colnames) && Array.isArray(coltypes)
                     ? colnames
                         .filter(
                           (colname: string, index: number) =>
-                            coltypes[index] === GenericDataType.NUMERIC,
+                            coltypes[index] === GenericDataType.NUMERIC ||
+                            coltypes[index] === GenericDataType.STRING,
                         )
                         .map(colname => ({
                           value: colname,
@@ -536,7 +537,7 @@ const config: ControlPanelConfig = {
                         }))
                     : [];
                 return {
-                  columnOptions: numericColumns,
+                  columnOptions: numericAndStringColumns,
                   verboseMap,
                 };
               },

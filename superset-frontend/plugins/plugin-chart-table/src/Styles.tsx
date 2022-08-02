@@ -35,9 +35,23 @@ export default styled.div`
 
     thead > tr > th {
       padding-right: 0;
-      position: relative;
       background: ${theme.colors.grayscale.light5};
       text-align: left;
+      :first-child {
+        position: sticky;
+        left: 0;
+        top: 0;
+        z-index: 50;
+      }
+    }
+    tr {
+      td:first-child {
+        position: sticky;
+        left: 0;
+        top: 0;
+        z-index: 50;
+        background-color: white;
+      }
     }
     th svg {
       color: ${theme.colors.grayscale.light2};
