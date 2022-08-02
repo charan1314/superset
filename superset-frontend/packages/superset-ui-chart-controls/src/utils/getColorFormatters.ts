@@ -203,7 +203,7 @@ export const getColorFormatters = memoizeOne(
             column: config?.column,
             getColorFromValue: getColorFunction(
               config,
-              data.map(row => row[config.column!] as number),
+              data.map(row => row[config.column!]),
             ),
           });
         }
