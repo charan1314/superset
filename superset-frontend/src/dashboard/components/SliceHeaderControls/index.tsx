@@ -219,6 +219,7 @@ class SliceHeaderControls extends React.PureComponent<
           getScreenshotNodeSelector(this.props.slice.slice_id),
           this.props.slice.slice_name,
           true,
+          'portrait',
           // @ts-ignore
         )(domEvent).then(() => {
           menu.style.visibility = 'visible';

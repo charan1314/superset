@@ -51,6 +51,7 @@ export default function downloadAsImage(
   selector: string,
   description: string,
   isExactSelector = false,
+  orientation: string,
 ) {
   return (event: SyntheticEvent) => {
     const elementToPrint = isExactSelector
@@ -75,12 +76,27 @@ export default function downloadAsImage(
       return true;
     };
 
+    const style = {
+      transform: 'rotate(90deg)',
+      top: '5%',
+    };
+
+    const options =
+      orientation === 'portrait'
+        ? {
+            quality: 0.95,
+            bgcolor: GRAY_BACKGROUND_COLOR,
+            filter,
+          }
+        : {
+            quality: 0.95,
+            bgcolor: GRAY_BACKGROUND_COLOR,
+            style,
+            filter,
+          };
+
     return domToImage
-      .toJpeg(elementToPrint, {
-        quality: 0.95,
-        bgcolor: GRAY_BACKGROUND_COLOR,
-        filter,
-      })
+      .toJpeg(elementToPrint, options)
       .then(dataUrl => {
         const link = document.createElement('a');
         link.download = `${generateFileStem(description)}.jpg`;
