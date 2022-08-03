@@ -1,3 +1,4 @@
+// @ts-nocheck
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -50,7 +51,7 @@ export default styled.div`
         left: 0;
         top: auto;
         z-index: 50;
-        background-color: white;
+        background-color: ${theme.colors.grayscale.light5};
       }
     }
     th svg {
