@@ -1,4 +1,5 @@
 // @ts-nocheck
+/* eslint-disable */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -70,20 +71,18 @@ function SupersetPluginChartDualYAxis(
     axisLine: {
       show: true,
     },
-    axisLabel: {	
-      formatter: function(value) {	
-        if(value >= 1000 && value < 1000000) {	
-          return value/1000 + 'k'	
-        }	
-        else if(value >= 1000000 && value < 1000000000) {	
-          return value/1000000 + 'M'	
-        }	
-        else if(value >= 1000000000) {	
-          return value/1000000000 + 'B'	
-        }	
-        return value;	
-      }	
-    }
+    axisLabel: {
+      formatter: function (value) {
+        if (value >= 1000 && value < 1000000) {
+          return value / 1000 + 'k';
+        } else if (value >= 1000000 && value < 1000000000) {
+          return value / 1000000 + 'M';
+        } else if (value >= 1000000000) {
+          return value / 1000000000 + 'B';
+        }
+        return value;
+      },
+    },
   });
 
   const lineChartConfig = (name: any) => ({
@@ -98,20 +97,18 @@ function SupersetPluginChartDualYAxis(
     axisLine: {
       show: true,
     },
-    axisLabel: {	
-      formatter: function(value) {	
-        if(value >= 1000 && value < 1000000) {	
-          return value/1000 + 'k'	
-        }	
-        else if(value >= 1000000 && value < 1000000000) {	
-          return value/1000000 + 'M'	
-        }	
-        else if(value >= 1000000000) {	
-          return value/1000000000 + 'B'	
-        }	
-        return value;	
-      }	
-    }
+    axisLabel: {
+      formatter: function (value) {
+        if (value >= 1000 && value < 1000000) {
+          return value / 1000 + 'k';
+        } else if (value >= 1000000 && value < 1000000000) {
+          return value / 1000000 + 'M';
+        } else if (value >= 1000000000) {
+          return value / 1000000000 + 'B';
+        }
+        return value;
+      },
+    },
   });
 
   const xAxisConfig = (axisData: any) => ({
