@@ -70,6 +70,20 @@ function SupersetPluginChartDualYAxis(
     axisLine: {
       show: true,
     },
+    axisLabel: {	
+      formatter: function(value) {	
+        if(value >= 1000 && value < 1000000) {	
+          return value/1000 + 'k'	
+        }	
+        else if(value >= 1000000 && value < 1000000000) {	
+          return value/1000000 + 'M'	
+        }	
+        else if(value >= 1000000000) {	
+          return value/1000000000 + 'B'	
+        }	
+        return value;	
+      }	
+    }
   });
 
   const lineChartConfig = (name: any) => ({
@@ -84,6 +98,20 @@ function SupersetPluginChartDualYAxis(
     axisLine: {
       show: true,
     },
+    axisLabel: {	
+      formatter: function(value) {	
+        if(value >= 1000 && value < 1000000) {	
+          return value/1000 + 'k'	
+        }	
+        else if(value >= 1000000 && value < 1000000000) {	
+          return value/1000000 + 'M'	
+        }	
+        else if(value >= 1000000000) {	
+          return value/1000000000 + 'B'	
+        }	
+        return value;	
+      }	
+    }
   });
 
   const xAxisConfig = (axisData: any) => ({
