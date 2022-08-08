@@ -1,3 +1,5 @@
+// @ts-nocheck
+/* eslint-disable */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -20,6 +22,7 @@ import {
   buildQueryContext,
   ensureIsArray,
   getMetricLabel,
+  getTotalMetricLabel,
   QueryMode,
   QueryObject,
   removeDuplicates,
@@ -49,8 +52,11 @@ const buildQuery: BuildQuery<TableChartFormData> = (
   formData: TableChartFormData,
   options,
 ) => {
-  const { percent_metrics: percentMetrics, order_desc: orderDesc = false } =
-    formData;
+  const {
+    percent_metrics: percentMetrics,
+    total_metrics: totalMetrics,
+    order_desc: orderDesc = false,
+  } = formData;
   const queryMode = getQueryMode(formData);
   const sortByMetric = ensureIsArray(formData.timeseries_limit_metric)[0];
   let formDataCopy = formData;
@@ -91,6 +97,24 @@ const buildQuery: BuildQuery<TableChartFormData> = (
             options: {
               columns: percentMetricLabels,
               rename_columns: percentMetricLabels.map(x => `%${x}`),
+            },
+          },
+        ];
+      }
+      if (totalMetrics && totalMetrics.length > 0) {
+        const totalMetricLabels = removeDuplicates(
+          totalMetrics.map(getTotalMetricLabel),
+        );
+        metrics = removeDuplicates(
+          metrics.concat(totalMetrics),
+          getTotalMetricLabel,
+        );
+        postProcessing = [
+          {
+            operation: 'contribution',
+            options: {
+              columns: totalMetricLabels,
+              rename_columns: totalMetricLabels.map(x => `${x}`),
             },
           },
         ];

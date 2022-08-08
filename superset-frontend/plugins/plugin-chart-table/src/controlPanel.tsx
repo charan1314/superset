@@ -174,6 +174,32 @@ const percent_metrics: typeof sharedControls.metrics = {
   validators: [],
 };
 
+const total_metrics: typeof sharedControls.metrics = {
+  type: 'MetricsControl',
+  label: t('Total metrics'),
+  description: t(
+    'Metrics for which total are to be displayed. Calculated from only data within the row limit.',
+  ),
+  multi: true,
+  visibility: isAggMode,
+  resetOnHide: false,
+  mapStateToProps: ({ datasource, controls }, controlState) => ({
+    columns: datasource?.columns || [],
+    savedMetrics: defineSavedMetrics(datasource),
+    datasource,
+    datasourceType: datasource?.type,
+    queryMode: getQueryMode(controls),
+    externalValidationErrors: validateAggControlValues(controls, [
+      controls.groupby?.value,
+      controls.metrics?.value,
+      controlState.value,
+    ]),
+  }),
+  rerender: ['groupby', 'metrics'],
+  default: [],
+  validators: [],
+};
+
 const dnd_percent_metrics = {
   ...percent_metrics,
   type: 'DndMetricSelect',
@@ -212,13 +238,14 @@ const config: ControlPanelConfig = {
                   [
                     controls.metrics?.value,
                     controls.percent_metrics?.value,
+                    controls.total_metrics?.value,
                     controlState.value,
                   ],
                 );
 
                 return newState;
               },
-              rerender: ['metrics', 'percent_metrics'],
+              rerender: ['metrics', 'percent_metrics', 'total_metrics'],
             },
           },
         ],
@@ -247,10 +274,11 @@ const config: ControlPanelConfig = {
                 externalValidationErrors: validateAggControlValues(controls, [
                   controls.groupby?.value,
                   controls.percent_metrics?.value,
+                  controls.total_metrics?.value,
                   controlState.value,
                 ]),
               }),
-              rerender: ['groupby', 'percent_metrics'],
+              rerender: ['groupby', 'percent_metrics', 'total_metrics'],
             },
           },
           {
@@ -267,6 +295,14 @@ const config: ControlPanelConfig = {
               ...(isFeatureEnabled(FeatureFlag.ENABLE_EXPLORE_DRAG_AND_DROP)
                 ? dnd_percent_metrics
                 : percent_metrics),
+            },
+          },
+        ],
+        [
+          {
+            name: 'total_metrics',
+            config: {
+              ...total_metrics,
             },
           },
         ],

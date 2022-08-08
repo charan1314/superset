@@ -20,7 +20,7 @@ import { t } from '../translation';
 import { removeDuplicates } from '../utils';
 import { DTTM_ALIAS } from './constants';
 import getColumnLabel from './getColumnLabel';
-import getMetricLabel from './getMetricLabel';
+import { getMetricLabel } from './getMetricLabel';
 import {
   QueryFields,
   QueryFormColumn,
