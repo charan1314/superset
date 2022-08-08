@@ -1,3 +1,5 @@
+// @ts-nocheck
+/* eslint-disable */
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -19,7 +21,7 @@
 
 import { QueryFormMetric, isSavedMetric, isAdhocMetricSimple } from './types';
 
-export default function getMetricLabel(metric: QueryFormMetric): string {
+export const getMetricLabel = (metric: QueryFormMetric): string => {
   if (isSavedMetric(metric)) {
     return metric;
   }
@@ -32,4 +34,19 @@ export default function getMetricLabel(metric: QueryFormMetric): string {
     })`;
   }
   return metric.sqlExpression;
-}
+};
+
+export const getTotalMetricLabel = (metric: QueryFormMetric): string => {
+  if (isSavedMetric(metric)) {
+    return metric;
+  }
+  if (metric.column.column_name) {
+    return metric.column.column_name;
+  }
+  if (isAdhocMetricSimple(metric)) {
+    return `${metric.aggregate}(${
+      metric.column.columnName || metric.column.column_name
+    })`;
+  }
+  return metric.sqlExpression;
+};
