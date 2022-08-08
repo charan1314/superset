@@ -399,7 +399,6 @@ export default function TableChart<D extends DataRecord = DataRecord>(
             whitespace: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 200px;
             display: inline-block;
             &:hover {
               overflow: visible;
