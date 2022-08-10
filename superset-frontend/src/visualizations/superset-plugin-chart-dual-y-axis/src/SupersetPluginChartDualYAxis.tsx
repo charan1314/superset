@@ -116,6 +116,7 @@ function SupersetPluginChartDualYAxis(
     axisTick: {
       alignWithLabel: true,
     },
+    inverse: true,
     data: axisData,
   });
 
