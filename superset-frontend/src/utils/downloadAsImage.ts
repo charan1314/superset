@@ -1,3 +1,5 @@
+// @ts-nocheck
+/* eslint-disable */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -78,19 +80,23 @@ export default function downloadAsImage(
 
     const style = {
       transform: 'rotate(90deg)',
-      top: '5%',
+    };
+
+    const same_options_orientation = {
+      quality: 0.95,
+      height: document.getElementsByClassName('dashboard').offsetHeight,
+      width: document.getElementsByClassName('dashboard').offsetWidth,
+      bgcolor: GRAY_BACKGROUND_COLOR,
     };
 
     const options =
       orientation === 'portrait'
         ? {
-            quality: 0.95,
-            bgcolor: GRAY_BACKGROUND_COLOR,
+            ...same_options_orientation,
             filter,
           }
         : {
-            quality: 0.95,
-            bgcolor: GRAY_BACKGROUND_COLOR,
+            ...same_options_orientation,
             style,
             filter,
           };
@@ -101,9 +107,8 @@ export default function downloadAsImage(
         const link = document.createElement('a');
         link.download = `${generateFileStem(description)}.jpg`;
         const pdf = new jsPDF();
-        const imgProps = pdf.getImageProperties(dataUrl);
         const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        const pdfHeight = pdf.internal.pageSize.getHeight();
         pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
         pdf.save(`${description}.pdf`);
       })
