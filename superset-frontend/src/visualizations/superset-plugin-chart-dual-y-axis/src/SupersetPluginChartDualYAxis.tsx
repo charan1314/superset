@@ -62,7 +62,7 @@ function SupersetPluginChartDualYAxis(
   const barChartConfig = (name: any) => ({
     nameLocation: 'center',
     nameTextStyle: {
-      padding: [0, 0, 50, 0],
+      padding: [0, 0, 25, 0],
     },
     type: 'value',
     name,
@@ -88,7 +88,7 @@ function SupersetPluginChartDualYAxis(
   const lineChartConfig = (name: any) => ({
     nameLocation: 'center',
     nameTextStyle: {
-      padding: [25, 0, 0, 0],
+      padding: [10, 0, 0, 0],
     },
     type: 'value',
     name,
