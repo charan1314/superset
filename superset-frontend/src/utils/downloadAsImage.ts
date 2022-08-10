@@ -78,28 +78,15 @@ export default function downloadAsImage(
       return true;
     };
 
-    const style = {
-      transform: 'rotate(90deg)',
-    };
-
     const same_options_orientation = {
       quality: 0.95,
-      height: document.getElementsByClassName('dashboard').offsetHeight,
-      width: document.getElementsByClassName('dashboard').offsetWidth,
       bgcolor: GRAY_BACKGROUND_COLOR,
     };
 
-    const options =
-      orientation === 'portrait'
-        ? {
-            ...same_options_orientation,
-            filter,
-          }
-        : {
-            ...same_options_orientation,
-            style,
-            filter,
-          };
+    const options = {
+      ...same_options_orientation,
+      filter,
+    };
 
     return domToImage
       .toJpeg(elementToPrint, options)
@@ -107,6 +94,8 @@ export default function downloadAsImage(
         const link = document.createElement('a');
         link.download = `${generateFileStem(description)}.jpg`;
         const pdf = new jsPDF();
+        pdf.internal.pageSize.width = 563;
+        pdf.internal.pageSize.height = 750;
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
         pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
