@@ -96,9 +96,25 @@ export default function downloadAsImage(
         const link = document.createElement('a');
         link.download = `${generateFileStem(description)}.jpg`;
         const pdf = new jsPDF(page_orientation, 'mm', [215.9, 279.4]);
+        const imageProperties = pdf.getImageProperties(dataUrl);
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
-        pdf.addImage(dataUrl, 'PNG', 5, 5, pdfWidth - 10, pdfHeight - 10);
+        const widthRatio = pdfWidth / imageProperties.width;
+        const heightRatio = pdfHeight / imageProperties.height;
+        const ratio = widthRatio > heightRatio ? heightRatio : widthRatio;
+        const canvasWidth = imageProperties.width * ratio;
+        const canvasHeight = imageProperties.height * ratio;
+
+        const marginX = (pdfWidth - canvasWidth) / 2;
+        const marginY = (pdfHeight - canvasHeight) / 2;
+        pdf.addImage(
+          dataUrl,
+          'PNG',
+          marginX,
+          marginY,
+          canvasWidth,
+          canvasHeight,
+        );
         pdf.save(`${description}.pdf`);
       })
       .catch(e => {
