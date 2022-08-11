@@ -27,7 +27,6 @@ import {
   getNumberFormatter,
   getTimeFormatter,
   getTimeFormatterForGranularity,
-  getTotalMetricLabel,
   NumberFormats,
   QueryMode,
   smartDateFormatter,
@@ -46,7 +45,6 @@ import {
   TableChartProps,
   TableChartTransformedProps,
 } from './types';
-import { queries } from '@testing-library/dom';
 
 const { PERCENT_3_POINT } = NumberFormats;
 const { DATABASE_DATETIME } = TimeFormats;
@@ -93,7 +91,6 @@ const processColumns = memoizeOne(function processColumns(
       table_timestamp_format: tableTimestampFormat,
       metrics: metrics_,
       percent_metrics: percentMetrics_,
-      total_metrics: totalMetrics_,
       column_config: columnConfig = {},
     },
     queriesData,
@@ -103,34 +100,17 @@ const processColumns = memoizeOne(function processColumns(
   // convert `metrics` and `percentMetrics` to the key names in `data.records`
   const metrics = (metrics_ ?? []).map(getMetricLabel);
   const rawPercentMetrics = (percentMetrics_ ?? []).map(getMetricLabel);
-  const rawTotalRowMetrics = (totalMetrics_ ?? []).map(getTotalMetricLabel);
-  const rawTotalMetrics = (totalMetrics_ ?? []).map(getMetricLabel);
   // column names for percent metrics always starts with a '%' sign.
   const percentMetrics = rawPercentMetrics.map((x: string) => `%${x}`);
-  const totalMetrics = rawTotalMetrics.map((x: string) => `${x}`);
   const metricsSet = new Set(metrics);
   const percentMetricsSet = new Set(percentMetrics);
-  const totalMetricsSet = new Set(totalMetrics);
   const rawPercentMetricsSet = new Set(rawPercentMetrics);
-  const rawTotalMetricsSet = new Set(rawTotalMetrics);
-  const totalQueryData = queriesData[queriesData.length - 1].data[0];
-  const totalQuery = [...metrics, ...rawTotalRowMetrics];
-  const totalQueryValues = Object.values(totalQueryData);
-  let totalFinalValues = totalQuery.reduce(
-    (object, key, index) => ({ ...object, [key]: totalQueryValues[index] }),
-    {},
-  );
 
   const columns: DataColumnMeta[] = (colnames || [])
     .filter(
       key =>
         // if a metric was only added to percent_metrics, they should not show up in the table.
         !(rawPercentMetricsSet.has(key) && !metricsSet.has(key)),
-    )
-    .filter(
-      key =>
-        // if a metric was total_metrics, they should not show up in the table.
-        !rawTotalMetricsSet.has(key),
     )
     .map((key: string, i) => {
       const label = verboseMap?.[key] || key;
@@ -140,7 +120,6 @@ const processColumns = memoizeOne(function processColumns(
       // because users can also add things like `MAX(str_col)` as a metric.
       const isMetric = metricsSet.has(key) && isNumeric(key, records);
       const isPercentMetric = percentMetricsSet.has(key);
-      const isTotalMetric = totalMetricsSet.has(key);
       const isTime = dataType === GenericDataType.TEMPORAL;
       const savedFormat = columnFormats?.[key];
       const numberFormat = config.d3NumberFormat || savedFormat;
@@ -184,16 +163,14 @@ const processColumns = memoizeOne(function processColumns(
         isNumeric: dataType === GenericDataType.NUMERIC,
         isMetric,
         isPercentMetric,
-        isTotalMetric,
         formatter,
         config,
       };
     });
-  return [metrics, percentMetrics, columns, totalFinalValues] as [
+  return [metrics, percentMetrics, columns] as [
     typeof metrics,
     typeof percentMetrics,
     typeof columns,
-    typeof totalFinalValues,
   ];
 },
 isEqualColumns);
@@ -249,8 +226,7 @@ const transformProps = (
   } = formData;
   const timeGrain = extractTimegrain(formData);
 
-  const [metrics, percentMetrics, columns, totalFinalValues] =
-    processColumns(chartProps);
+  const [metrics, percentMetrics, columns] = processColumns(chartProps);
 
   let baseQuery;
   let countQuery;
@@ -266,7 +242,7 @@ const transformProps = (
   const data = processDataRecords(baseQuery?.data, columns);
   const totals =
     showTotals && queryMode === QueryMode.aggregate
-      ? totalFinalValues
+      ? totalQuery?.data[0]
       : undefined;
   const columnColorFormatters =
     getColorFormatters(conditionalFormatting, data) ?? defaultColorFormatters;

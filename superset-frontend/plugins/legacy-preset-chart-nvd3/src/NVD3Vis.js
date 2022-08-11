@@ -208,7 +208,7 @@ const propTypes = {
   xAxisLabel: PropTypes.string,
   xAxisShowMinMax: PropTypes.bool,
   xIsLogScale: PropTypes.bool,
-  xTicksLayout: PropTypes.oneOf(['auto', 'staggered', '45°']),
+  xTicksLayout: PropTypes.oneOf(['auto', 'staggered', '45°', '90°']),
   yAxisFormat: PropTypes.string,
   yAxisBounds: PropTypes.arrayOf(PropTypes.number),
   yAxisLabel: PropTypes.string,
@@ -357,14 +357,20 @@ function nvd3Vis(element, props) {
 
     // Handling xAxis ticks settings
     const staggerLabels = xTicksLayout === 'staggered';
-    const xLabelRotation =
+    let xLabelRotation =
       (xTicksLayout === 'auto' && isVizTypes(['column', 'dist_bar'])) ||
       xTicksLayout === '45°'
         ? 45
         : 0;
-    if (xLabelRotation === 45 && isTruthy(showBrush)) {
+    xLabelRotation = xTicksLayout === '90°' ? 90 : xLabelRotation;
+    if (
+      xLabelRotation === 45 ||
+      (xLabelRotation === 90 && isTruthy(showBrush))
+    ) {
       onError(
-        t('You cannot use 45° tick layout along with the time range filter'),
+        t(
+          'You cannot use 45° or 90° tick layout along with the time range filter',
+        ),
       );
 
       return null;
