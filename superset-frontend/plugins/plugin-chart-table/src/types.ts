@@ -44,7 +44,6 @@ export interface DataColumnMeta {
   formatter?: TimeFormatter | NumberFormatter | CustomFormatter;
   isMetric?: boolean;
   isPercentMetric?: boolean;
-  isTotalMetric?: boolean;
   isNumeric?: boolean;
   config?: ColumnConfig;
 }

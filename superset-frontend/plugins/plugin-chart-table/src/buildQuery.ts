@@ -22,7 +22,6 @@ import {
   buildQueryContext,
   ensureIsArray,
   getMetricLabel,
-  getTotalMetricLabel,
   QueryMode,
   QueryObject,
   removeDuplicates,
@@ -97,24 +96,6 @@ const buildQuery: BuildQuery<TableChartFormData> = (
             options: {
               columns: percentMetricLabels,
               rename_columns: percentMetricLabels.map(x => `%${x}`),
-            },
-          },
-        ];
-      }
-      if (totalMetrics && totalMetrics.length > 0) {
-        const totalMetricLabels = removeDuplicates(
-          totalMetrics.map(getTotalMetricLabel),
-        );
-        metrics = removeDuplicates(
-          metrics.concat(totalMetrics),
-          getTotalMetricLabel,
-        );
-        postProcessing = [
-          {
-            operation: 'contribution',
-            options: {
-              columns: totalMetricLabels,
-              rename_columns: totalMetricLabels.map(x => `${x}`),
             },
           },
         ];

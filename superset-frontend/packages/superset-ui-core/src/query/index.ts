@@ -25,7 +25,7 @@ export { default as buildQueryObject } from './buildQueryObject';
 export { default as convertFilter } from './convertFilter';
 export { default as extractTimegrain } from './extractTimegrain';
 export { default as getColumnLabel } from './getColumnLabel';
-export { getMetricLabel, getTotalMetricLabel } from './getMetricLabel';
+export { default as getMetricLabel } from './getMetricLabel';
 export { default as DatasourceKey } from './DatasourceKey';
 export { default as normalizeOrderBy } from './normalizeOrderBy';
 

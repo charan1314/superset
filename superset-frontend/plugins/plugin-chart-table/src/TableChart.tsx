@@ -407,18 +407,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
                   colorPositiveNegative,
                 })
               : undefined)};
-            white-space: nowrap;
-          `;
-          //  Added styles for extra long table cells for ellipsis
-          const StyledLongCell = styled.div`
-            whitespace: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: inline-block;
-            &:hover {
-              overflow: visible;
-              white-space: normal;
-            }
+            white-space: ${value instanceof Date ? 'nowrap' : undefined};
           `;
 
           const cellProps = {
@@ -462,7 +451,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
                   {text}
                 </div>
               ) : (
-                <StyledLongCell>{text}</StyledLongCell>
+                text
               )}
             </StyledCell>
           );

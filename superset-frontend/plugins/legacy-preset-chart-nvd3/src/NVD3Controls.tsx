@@ -199,7 +199,7 @@ export const xTicksLayout: CustomControlItem = {
   config: {
     type: 'SelectControl',
     label: t('X Tick Layout'),
-    choices: formatSelectOptions(['auto', 'flat', '45°', 'staggered']),
+    choices: formatSelectOptions(['auto', 'flat', '45°', 'staggered', '90°']),
     default: 'auto',
     clearable: false,
     renderTrigger: true,
