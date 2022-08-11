@@ -182,6 +182,23 @@ class HeaderActionsDropdown extends React.PureComponent {
         });
         break;
       }
+      case MENU_KEYS.DOWNLOAD_AS_IMAGE_LANDSCAPE: {
+        // menu closes with a delay, we need to hide it manually,
+        // so that we don't capture it on the screenshot
+        const menu = document.querySelector(
+          '.ant-dropdown:not(.ant-dropdown-hidden)',
+        );
+        menu.style.visibility = 'hidden';
+        downloadAsImage(
+          SCREENSHOT_NODE_SELECTOR,
+          this.props.dashboardTitle,
+          true,
+          'landscape',
+        )(domEvent).then(() => {
+          menu.style.visibility = 'visible';
+        });
+        break;
+      }
       case MENU_KEYS.TOGGLE_FULLSCREEN: {
         const url = getDashboardUrl({
           pathname: window.location.pathname,
@@ -312,7 +329,15 @@ class HeaderActionsDropdown extends React.PureComponent {
             key={MENU_KEYS.DOWNLOAD_AS_IMAGE_PORTRAIT}
             onClick={this.handleMenuClick}
           >
-            {t('Download as pdf')}
+            {t('Download as pdf in portrait')}
+          </Menu.Item>
+        )}
+        {!editMode && (
+          <Menu.Item
+            key={MENU_KEYS.DOWNLOAD_AS_IMAGE_LANDSCAPE}
+            onClick={this.handleMenuClick}
+          >
+            {t('Download as pdf in landscape')}
           </Menu.Item>
         )}
         {userCanShare && (

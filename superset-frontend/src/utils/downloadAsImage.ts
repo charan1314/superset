@@ -78,6 +78,8 @@ export default function downloadAsImage(
       return true;
     };
 
+    const page_orientation = orientation === 'portrait' ? 'p' : 'l';
+
     const same_options_orientation = {
       quality: 0.95,
       bgcolor: GRAY_BACKGROUND_COLOR,
@@ -93,12 +95,10 @@ export default function downloadAsImage(
       .then(dataUrl => {
         const link = document.createElement('a');
         link.download = `${generateFileStem(description)}.jpg`;
-        const pdf = new jsPDF();
-        pdf.internal.pageSize.width = 563;
-        pdf.internal.pageSize.height = 750;
+        const pdf = new jsPDF(page_orientation, 'mm', [215.9, 279.4]);
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
-        pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.addImage(dataUrl, 'PNG', 5, 5, pdfWidth - 10, pdfHeight - 10);
         pdf.save(`${description}.pdf`);
       })
       .catch(e => {
