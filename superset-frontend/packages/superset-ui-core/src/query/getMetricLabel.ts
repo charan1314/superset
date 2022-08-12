@@ -21,7 +21,7 @@
 
 import { QueryFormMetric, isSavedMetric, isAdhocMetricSimple } from './types';
 
-export const getMetricLabel = (metric: QueryFormMetric): string => {
+export default function getMetricLabel(metric: QueryFormMetric): string {
   if (isSavedMetric(metric)) {
     return metric;
   }
@@ -34,19 +34,4 @@ export const getMetricLabel = (metric: QueryFormMetric): string => {
     })`;
   }
   return metric.sqlExpression;
-};
-
-export const getTotalMetricLabel = (metric: QueryFormMetric): string => {
-  if (isSavedMetric(metric)) {
-    return metric;
-  }
-  if (metric.column.column_name) {
-    return metric.column.column_name;
-  }
-  if (isAdhocMetricSimple(metric)) {
-    return `${metric.aggregate}(${
-      metric.column.columnName || metric.column.column_name
-    })`;
-  }
-  return metric.sqlExpression;
-};
+}

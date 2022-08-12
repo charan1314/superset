@@ -117,7 +117,7 @@ function SupersetPluginChartDualYAxis(
       alignWithLabel: true,
     },
     axisLabel: {
-      fontSize: 10
+      fontSize: 10,
     },
     data: axisData,
   });
