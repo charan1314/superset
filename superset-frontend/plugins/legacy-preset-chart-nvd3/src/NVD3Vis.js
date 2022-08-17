@@ -362,15 +362,9 @@ function nvd3Vis(element, props) {
       xTicksLayout === '45°'
         ? 45
         : 0;
-    xLabelRotation = xTicksLayout === '90°' ? 90 : xLabelRotation;
-    if (
-      xLabelRotation === 45 ||
-      (xLabelRotation === 90 && isTruthy(showBrush))
-    ) {
+    if (xLabelRotation === 45 && isTruthy(showBrush)) {
       onError(
-        t(
-          'You cannot use 45° or 90° tick layout along with the time range filter',
-        ),
+        t('You cannot use 45° tick layout along with the time range filter'),
       );
 
       return null;
