@@ -83,7 +83,7 @@ function SupersetPluginChartDualYAxis(
         return value;
       },
     },
-    inverse: true,
+    inverse: false,
   });
 
   const lineChartConfig = (name: any) => ({
