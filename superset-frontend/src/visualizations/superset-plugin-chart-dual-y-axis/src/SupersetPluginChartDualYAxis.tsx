@@ -18,7 +18,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback, useLayoutEffect } from 'react';
 import { styled } from '@superset-ui/core';
 import { ECharts, init } from 'echarts';
 import {
@@ -203,9 +203,27 @@ function SupersetPluginChartDualYAxis(
     }
     options.series[1].yAxisIndex = 1;
     chartRef.current.setOption(options, true);
-  }, []);
+  }, [height, width]);
 
   console.log('Plugin props', formData, data, height, width);
+
+  const handleSizeChange = useCallback(
+    ({ width, height }: { width: number; height: number }) => {
+      if (chartRef.current) {
+        chartRef.current.resize({ width, height });
+      }
+    },
+    [],
+  );
+
+  // did mount
+  useEffect(() => {
+    handleSizeChange({ width, height });
+  }, []);
+
+  useLayoutEffect(() => {
+    handleSizeChange({ width, height });
+  }, [width, height, handleSizeChange]);
 
   return <Styles id="main" ref={rootElem} height={height} width={width} />;
 }

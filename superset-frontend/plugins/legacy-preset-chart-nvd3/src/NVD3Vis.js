@@ -904,7 +904,7 @@ function nvd3Vis(element, props) {
         // If x bounds are shown, we need a right margin
         margins.right = Math.max(20, maxXAxisLabelHeight / 2) + marginPad;
       }
-      if (xLabelRotation === 45) {
+      if (xLabelRotation === 45 || xLabelRotation === 90) {
         margins.bottom =
           maxXAxisLabelHeight * Math.sin((Math.PI * xLabelRotation) / 180) +
           marginPad +
