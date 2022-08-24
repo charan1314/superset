@@ -205,7 +205,7 @@ const config: ControlPanelConfig = {
               type: 'SliderControl',
               label: t('Outer Radius'),
               renderTrigger: true,
-              min: 10,
+              min: 0,
               max: 100,
               step: 1,
               default: outerRadius,
