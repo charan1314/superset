@@ -21,6 +21,32 @@ import CategoricalScheme from '../../CategoricalScheme';
 
 const schemes = [
   {
+    id: 'helioColorPalette',
+    label: 'Helio Color Palette',
+    colors: [
+      '#025187',
+      '#f89532',
+      '#bd6031',
+      '#7a7a7a',
+      '#32749e',
+      '#faaa55',
+      '#ce8865',
+      '#a1a1a1',
+      '#589cc4',
+      '#e0923e',
+      '#70462a',
+      '#656464CC',
+      '#7c91a8',
+      '#f1bc7b',
+      '#858484',
+      '#7A7A7ACC',
+      '#0d88da',
+      '#e58008',
+      '#622000',
+      '#3D3D3DCC',
+    ],
+  },
+  {
     id: 'd3Category10',
     label: 'D3 Category 10',
     colors: [
