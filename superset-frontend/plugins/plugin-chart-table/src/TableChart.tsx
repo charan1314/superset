@@ -533,7 +533,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
                   {text}
                 </div>
               ) : (
-                checkForText(text)
+                text
               )}
             </StyledCell>
           );
