@@ -380,7 +380,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
         const query = new URLSearchParams(window.location.href);
         const unit = query.get('unit');
         const currencySymbol = query.get('currencySymbol');
-        var displayLabel = label.replace('{{unit}}', unit);
+        let displayLabel = label.replace('{{unit}}', unit);
         displayLabel = displayLabel.replace('{{currencySymbol}}', currencySymbol);
         return displayLabel;
       };
