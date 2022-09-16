@@ -376,6 +376,14 @@ export default function TableChart<D extends DataRecord = DataRecord>(
       if (emitFilter) {
         className += ' dt-is-filter';
       }
+      const setHeaders = label => {
+        const query = new URLSearchParams(window.location.href);
+        const unit = query.get('unit');
+        const currencySymbol = query.get('currencySymbol');
+        var displayLabel = label.replace('{{unit}}', unit);
+        displayLabel = displayLabel.replace('{{currencySymbol}}', currencySymbol);
+        return displayLabel;
+      };
 
       return {
         id: String(i), // to allow duplicate column keys
@@ -573,7 +581,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
                 alignItems: 'flex-end',
               }}
             >
-              <span data-column-name={col.id}>{label}</span>
+              <span data-column-name={col.id}>{setHeaders(label)}</span>
               <SortIcon column={col} />
             </div>
           </th>
