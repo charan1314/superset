@@ -378,10 +378,11 @@ export default function TableChart<D extends DataRecord = DataRecord>(
       }
       const setHeaders = label => {
         const query = new URLSearchParams(window.location.href);
-        const unit = query.get('displayUnit');
-        const currencySymbol = query.get('symbol');
-        let displayLabel = label.replace('{{unit}}', unit);
-        displayLabel = displayLabel.replace('{{currencySymbol}}', currencySymbol);
+        let displayLabel = label.replace('{{unit}}', query.get('displayUnit'));
+        displayLabel = displayLabel.replace('{{currencySymbol}}', query.get('symbol'));
+        displayLabel = displayLabel.replace('{{projectOne}}', query.get('projectOne'));
+        displayLabel = displayLabel.replace('{{projectTwo}}', query.get('projectTwo'));
+        displayLabel = displayLabel.replace('{{projectThree}}', query.get('projectThree'));
         return displayLabel;
       };
 
