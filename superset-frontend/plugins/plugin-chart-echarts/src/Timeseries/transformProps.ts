@@ -132,7 +132,6 @@ export default function transformProps(
     zoomable,
     richTooltip,
     xAxis: xAxisOrig,
-    xAxisLabelRotation,
     emitFilter,
     groupby,
     showValue,
