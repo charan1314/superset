@@ -31,6 +31,7 @@ import {
   isTimeseriesAnnotationLayer,
   TimeseriesChartDataResponseResult,
   t,
+  TimeGranularity,
 } from '@superset-ui/core';
 import { isDerivedSeries } from '@superset-ui/chart-controls';
 import { EChartsCoreOption, SeriesOption } from 'echarts';
@@ -329,6 +330,8 @@ export default function transformProps(
     .map(entry => entry.name || '')
     .concat(extractAnnotationLabels(annotationLayers, annotationData));
 
+  console.log(xAxisType, timeGrainSqla, 'vsfdvdfvd');
+
   let xAxis: any = {
     type: xAxisType,
     name: xAxisTitle,
@@ -337,12 +340,13 @@ export default function transformProps(
     axisLabel: {
       hideOverlap: true,
       formatter: xAxisFormatter,
-      rotate: xAxisLabelRotation,
+      rotate: 90,
     },
     minInterval:
       xAxisType === AxisType.time && timeGrainSqla
         ? TIMEGRAIN_TO_TIMESTAMP[timeGrainSqla]
         : 0,
+    maxInterval: TIMEGRAIN_TO_TIMESTAMP[TimeGranularity.YEAR],
   };
 
   if (xAxisType === AxisType.time) {
