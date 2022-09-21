@@ -20,7 +20,6 @@
  */
 import { SyntheticEvent } from 'react';
 import domToImage from 'dom-to-image-more';
-import jsPDF from 'jspdf';
 import kebabCase from 'lodash/kebabCase';
 import { t } from '@superset-ui/core';
 import { addWarningToast } from 'src/components/MessageToasts/actions';
@@ -53,7 +52,6 @@ export default function downloadAsImage(
   selector: string,
   description: string,
   isExactSelector = false,
-  orientation: string,
 ) {
   return (event: SyntheticEvent) => {
     const elementToPrint = isExactSelector
@@ -78,44 +76,17 @@ export default function downloadAsImage(
       return true;
     };
 
-    const page_orientation = orientation === 'portrait' ? 'p' : 'l';
-
-    const same_options_orientation = {
-      quality: 0.95,
-      bgcolor: GRAY_BACKGROUND_COLOR,
-    };
-
-    const options = {
-      ...same_options_orientation,
-      filter,
-    };
-
     return domToImage
-      .toJpeg(elementToPrint, options)
+      .toJpeg(elementToPrint, {
+        quality: 0.95,
+        bgcolor: GRAY_BACKGROUND_COLOR,
+        filter,
+      })
       .then(dataUrl => {
         const link = document.createElement('a');
         link.download = `${generateFileStem(description)}.jpg`;
-        const pdf = new jsPDF(page_orientation, 'mm', [215.9, 279.4]);
-        const imageProperties = pdf.getImageProperties(dataUrl);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        const widthRatio = pdfWidth / imageProperties.width;
-        const heightRatio = pdfHeight / imageProperties.height;
-        const ratio = widthRatio > heightRatio ? heightRatio : widthRatio;
-        const canvasWidth = imageProperties.width * ratio;
-        const canvasHeight = imageProperties.height * ratio;
-
-        const marginX = (pdfWidth - canvasWidth) / 2;
-        const marginY = (pdfHeight - canvasHeight) / 2;
-        pdf.addImage(
-          dataUrl,
-          'PNG',
-          marginX,
-          marginY,
-          canvasWidth,
-          canvasHeight,
-        );
-        pdf.save(`${description}.pdf`);
+        link.href = dataUrl;
+        link.click();
       })
       .catch(e => {
         console.error('Creating image failed', e);
