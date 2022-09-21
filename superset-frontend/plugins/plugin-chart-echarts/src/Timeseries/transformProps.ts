@@ -1,3 +1,5 @@
+// @ts-nocheck
+/* eslint-disable */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -142,6 +144,7 @@ export default function transformProps(
     xAxisTitleMargin,
     yAxisTitleMargin,
     yAxisTitlePosition,
+    xAxisLabelRotation,
     sliceId,
     timeGrainSqla,
     orientation,
@@ -329,8 +332,6 @@ export default function transformProps(
     .map(entry => entry.name || '')
     .concat(extractAnnotationLabels(annotationLayers, annotationData));
 
-  console.log(xAxisType, timeGrainSqla, 'vsfdvdfvd');
-
   let xAxis: any = {
     type: xAxisType,
     name: xAxisTitle,
@@ -339,13 +340,16 @@ export default function transformProps(
     axisLabel: {
       hideOverlap: true,
       formatter: xAxisFormatter,
-      rotate: 90,
+      rotate: xAxisLabelRotation,
+    },
+    min: function (value: any) {
+      return value.min - 3600 * 1000 * 24 * 31 * 12 * 2;
     },
     minInterval:
       xAxisType === AxisType.time && timeGrainSqla
         ? TIMEGRAIN_TO_TIMESTAMP[timeGrainSqla]
         : 0,
-    maxInterval: TIMEGRAIN_TO_TIMESTAMP[TimeGranularity.YEAR],
+    maxInterval: TIMEGRAIN_TO_TIMESTAMP[TimeGranularity.FIVE_YEAR],
   };
 
   if (xAxisType === AxisType.time) {

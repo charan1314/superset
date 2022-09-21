@@ -40,6 +40,7 @@ const TimeFormatsForGranularity: Record<TimeGranularity, string> = {
   [TimeGranularity.MONTH]: '%b %Y',
   [TimeGranularity.QUARTER]: '%Y Q%q',
   [TimeGranularity.YEAR]: '%Y',
+  [TimeGranularity.FIVE_YEAR]: '%Y',
   [TimeGranularity.WEEK_STARTING_SUNDAY]: DATABASE_DATE,
   [TimeGranularity.WEEK_STARTING_MONDAY]: DATABASE_DATE,
   [TimeGranularity.WEEK_ENDING_SATURDAY]: DATABASE_DATE,

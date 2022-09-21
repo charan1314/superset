@@ -89,6 +89,7 @@ export const TIMEGRAIN_TO_TIMESTAMP = {
   [TimeGranularity.MONTH]: 3600 * 1000 * 24 * 31,
   [TimeGranularity.QUARTER]: 3600 * 1000 * 24 * 31 * 3,
   [TimeGranularity.YEAR]: 3600 * 1000 * 24 * 31 * 12,
+  [TimeGranularity.FIVE_YEAR]: 3600 * 1000 * 24 * 31 * 12 * 5,
 };
 
 export const DEFAULT_LEGEND_FORM_DATA: EchartsLegendFormData = {
