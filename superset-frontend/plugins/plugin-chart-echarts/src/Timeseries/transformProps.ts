@@ -328,7 +328,47 @@ export default function transformProps(
     )
     .map(entry => entry.name || '')
     .concat(extractAnnotationLabels(annotationLayers, annotationData));
-
+  // eslint-disable-next-line array-callback-return
+  series.map(row => {
+    // eslint-disable-next-line no-param-reassign
+    row.markLine = {
+      symbol: ['none', 'none'],
+      data: [
+        {
+          name: '2025',
+          xAxis: '2025',
+          label: {
+            position: 'start',
+            distance: [0, 7],
+            // eslint-disable-next-line theme-colors/no-literal-colors
+            color: '#8d8d8d',
+          },
+          lineStyle: {
+            normal: {
+              type: 'dashed',
+              color: 'black',
+              cap: 'butt',
+            },
+          },
+        },
+        {
+          name: '2030',
+          xAxis: '2030',
+          label: {
+            position: 'start',
+            distance: [0, 7],
+            color: '#8d8d8d',
+          },
+          lineStyle: {
+            normal: {
+              type: 'dashed',
+              color: 'black',
+            },
+          },
+        },
+      ],
+    };
+  });
   let xAxis: any = {
     type: xAxisType,
     name: xAxisTitle,
