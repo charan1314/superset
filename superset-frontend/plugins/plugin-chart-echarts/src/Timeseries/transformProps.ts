@@ -346,6 +346,7 @@ export default function transformProps(
           lineStyle: {
             normal: {
               type: 'dashed',
+              // eslint-disable-next-line theme-colors/no-literal-colors
               color: 'black',
               cap: 'butt',
             },
@@ -357,11 +358,13 @@ export default function transformProps(
           label: {
             position: 'start',
             distance: [0, 7],
+            // eslint-disable-next-line theme-colors/no-literal-colors
             color: '#8d8d8d',
           },
           lineStyle: {
             normal: {
               type: 'dashed',
+              // eslint-disable-next-line theme-colors/no-literal-colors
               color: 'black',
             },
           },
