@@ -87,8 +87,7 @@ const MENU_KEYS = {
   SET_FILTER_MAPPING: 'set-filter-mapping',
   EDIT_PROPERTIES: 'edit-properties',
   EDIT_CSS: 'edit-css',
-  DOWNLOAD_AS_IMAGE_PORTRAIT: 'download-as-image-portrait',
-  DOWNLOAD_AS_IMAGE_LANDSCAPE: 'download-as-image-landscape',
+  DOWNLOAD_AS_IMAGE: 'download-as-image',
   TOGGLE_FULLSCREEN: 'toggle-fullscreen',
   MANAGE_EMBEDDED: 'manage-embedded',
   MANAGE_EMAIL_REPORT: 'manage-email-report',
@@ -165,7 +164,7 @@ class HeaderActionsDropdown extends React.PureComponent {
       case MENU_KEYS.EDIT_PROPERTIES:
         this.props.showPropertiesModal();
         break;
-      case MENU_KEYS.DOWNLOAD_AS_IMAGE_PORTRAIT: {
+      case MENU_KEYS.DOWNLOAD_AS_IMAGE: {
         // menu closes with a delay, we need to hide it manually,
         // so that we don't capture it on the screenshot
         const menu = document.querySelector(
@@ -176,24 +175,6 @@ class HeaderActionsDropdown extends React.PureComponent {
           SCREENSHOT_NODE_SELECTOR,
           this.props.dashboardTitle,
           true,
-          'portrait',
-        )(domEvent).then(() => {
-          menu.style.visibility = 'visible';
-        });
-        break;
-      }
-      case MENU_KEYS.DOWNLOAD_AS_IMAGE_LANDSCAPE: {
-        // menu closes with a delay, we need to hide it manually,
-        // so that we don't capture it on the screenshot
-        const menu = document.querySelector(
-          '.ant-dropdown:not(.ant-dropdown-hidden)',
-        );
-        menu.style.visibility = 'hidden';
-        downloadAsImage(
-          SCREENSHOT_NODE_SELECTOR,
-          this.props.dashboardTitle,
-          true,
-          'landscape',
         )(domEvent).then(() => {
           menu.style.visibility = 'visible';
         });
@@ -326,18 +307,10 @@ class HeaderActionsDropdown extends React.PureComponent {
         )}
         {!editMode && (
           <Menu.Item
-            key={MENU_KEYS.DOWNLOAD_AS_IMAGE_PORTRAIT}
+            key={MENU_KEYS.DOWNLOAD_AS_IMAGE}
             onClick={this.handleMenuClick}
           >
-            {t('Download as pdf in portrait')}
-          </Menu.Item>
-        )}
-        {!editMode && (
-          <Menu.Item
-            key={MENU_KEYS.DOWNLOAD_AS_IMAGE_LANDSCAPE}
-            onClick={this.handleMenuClick}
-          >
-            {t('Download as pdf in landscape')}
+            {t('Download as image')}
           </Menu.Item>
         )}
         {userCanShare && (
