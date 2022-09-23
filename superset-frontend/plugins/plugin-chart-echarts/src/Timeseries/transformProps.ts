@@ -82,7 +82,6 @@ import {
 import {
   AreaChartExtraControlsValue,
   TIMESERIES_CONSTANTS,
-  TIMEGRAIN_TO_TIMESTAMP,
 } from '../constants';
 
 export default function transformProps(
@@ -143,7 +142,6 @@ export default function transformProps(
     yAxisTitleMargin,
     yAxisTitlePosition,
     sliceId,
-    timeGrainSqla,
     orientation,
   }: EchartsTimeseriesFormData = { ...DEFAULT_FORM_DATA, ...formData };
 
@@ -329,20 +327,106 @@ export default function transformProps(
     .map(entry => entry.name || '')
     .concat(extractAnnotationLabels(annotationLayers, annotationData));
 
+  const markLineLabel: any = {
+    show: true,
+    position: 'start',
+    formatter: '{b} {c}',
+    lineHeight: 12,
+    padding: [0, 0, 0, 4.4],
+    distance: [0, -1],
+    width: 30,
+    // eslint-disable-next-line theme-colors/no-literal-colors
+    color: '#8d8d8d',
+    overflow: 'break',
+  };
+
+  const transperantMarkLine: any = {
+    normal: {
+      type: 'dashed',
+      // eslint-disable-next-line theme-colors/no-literal-colors
+      color: 'rgba(255,255,255,0)',
+      cap: 'butt',
+    },
+  };
+
+  const coloredMarkLine: any = {
+    normal: {
+      type: 'dashed',
+      // eslint-disable-next-line theme-colors/no-literal-colors
+      color: '#b2b2b2',
+      cap: 'butt',
+    },
+  };
+
+  // eslint-disable-next-line array-callback-return
+  series.map(row => {
+    // eslint-disable-next-line no-param-reassign
+    row.markLine = {
+      symbol: ['none', 'none'],
+      data: [
+        {
+          name: 'T',
+          xAxis: '2020',
+          label: markLineLabel,
+          lineStyle: transperantMarkLine,
+        },
+        {
+          name: 'T',
+          xAxis: '2025',
+          emphasis: {
+            disabled: true,
+          },
+          label: markLineLabel,
+          lineStyle: coloredMarkLine,
+        },
+        {
+          name: 'T',
+          xAxis: '2030',
+          emphasis: {
+            disabled: true,
+          },
+          label: markLineLabel,
+          lineStyle: coloredMarkLine,
+        },
+        {
+          name: 'T',
+          xAxis: '2035',
+          label: markLineLabel,
+          lineStyle: transperantMarkLine,
+        },
+        {
+          name: 'T',
+          xAxis: '2040',
+          label: markLineLabel,
+          lineStyle: transperantMarkLine,
+        },
+        {
+          name: 'T',
+          xAxis: '2045',
+          label: markLineLabel,
+          lineStyle: transperantMarkLine,
+        },
+        {
+          name: 'T',
+          xAxis: '2050',
+          label: markLineLabel,
+          lineStyle: transperantMarkLine,
+        },
+      ],
+    };
+  });
   let xAxis: any = {
     type: xAxisType,
     name: xAxisTitle,
+    axisTick: { show: false },
     nameGap: convertInteger(xAxisTitleMargin),
     nameLocation: 'middle',
     axisLabel: {
+      show: false,
       hideOverlap: true,
       formatter: xAxisFormatter,
       rotate: xAxisLabelRotation,
     },
-    minInterval:
-      xAxisType === AxisType.time && timeGrainSqla
-        ? TIMEGRAIN_TO_TIMESTAMP[timeGrainSqla]
-        : 0,
   };
 
   if (xAxisType === AxisType.time) {
@@ -379,6 +463,7 @@ export default function transformProps(
     grid: {
       ...defaultGrid,
       ...padding,
+      bottom: 40,
     },
     xAxis,
     yAxis,
