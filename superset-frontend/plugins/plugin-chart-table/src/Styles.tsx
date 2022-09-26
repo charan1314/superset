@@ -53,9 +53,6 @@ export default styled.div`
         z-index: 50;
         background-color: ${theme.colors.grayscale.light5};
       }
-      td:nth-child(n + 2) {
-        padding-left: 15px;
-      }
     }
     th svg {
       color: ${theme.colors.grayscale.light2};
