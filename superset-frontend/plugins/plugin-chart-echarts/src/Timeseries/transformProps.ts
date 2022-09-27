@@ -367,7 +367,7 @@ export default function transformProps(
         row.id !== cRow.id &&
         JSON.stringify(row.data) === JSON.stringify(cRow.data)
       ) {
-        if (cRow.id === 'AVG(Option 1: Pathway 2DS - 2025)') {
+        if (cRow.id === 'Option 1: Pathway 2DS - 2025') {
           matchingArray[cRow.id] = 0.98;
           // @ts-ignore
           // eslint-disable-next-line array-callback-return
