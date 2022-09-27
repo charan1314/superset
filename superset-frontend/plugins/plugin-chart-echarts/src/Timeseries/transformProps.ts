@@ -358,6 +358,44 @@ export default function transformProps(
     },
   };
 
+  const matchingArray = {};
+  // eslint-disable-next-line array-callback-return
+  series.map(row => {
+    // eslint-disable-next-line array-callback-return
+    series.map(cRow => {
+      if (
+        row.id !== cRow.id &&
+        JSON.stringify(row.data) === JSON.stringify(cRow.data)
+      ) {
+        if (cRow.id === 'AVG(Option 1: Pathway 2DS - 2025)') {
+          matchingArray[cRow.id] = 0.98;
+          // @ts-ignore
+          // eslint-disable-next-line array-callback-return
+          cRow.data.map(data => {
+            // eslint-disable-next-line no-param-reassign
+            data[1] *= 0.98;
+          });
+        } else {
+          // @ts-ignore
+          matchingArray[cRow.id] = 0.96;
+          // @ts-ignore
+          // eslint-disable-next-line array-callback-return
+          cRow.data.map(data => {
+            // eslint-disable-next-line no-param-reassign
+            data[1] *= 0.96;
+          });
+        }
+      }
+    });
+  });
+
+  const tooltipValueFix = (key: string, value: number | undefined) => {
+    if (matchingArray.hasOwnProperty(key)) {
+      // @ts-ignore
+      return value / matchingArray[key];
+    }
+    return value;
+  };
   // eslint-disable-next-line array-callback-return
   series.map(row => {
     // eslint-disable-next-line no-param-reassign
@@ -489,6 +527,7 @@ export default function transformProps(
 
         Object.keys(forecastValues).forEach(key => {
           const value = forecastValues[key];
+          value.observation = tooltipValueFix(key, value.observation);
           const content = formatForecastTooltipSeries({
             ...value,
             seriesName: key,
