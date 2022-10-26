@@ -22,6 +22,8 @@ import cx from 'classnames';
 import { css, styled, SupersetTheme, t } from '@superset-ui/core';
 import { Tooltip } from 'src/components/Tooltip';
 import CertifiedBadge from '../CertifiedBadge';
+// @ts-ignore
+import { translations } from '../../../translations/traslation_servies';
 
 export interface EditableTitleProps {
   canEdit?: boolean;
@@ -231,7 +233,7 @@ export default function EditableTitle({
           }
         `}
       >
-        {value}
+        {translations(value)}
       </Link>
     ) : (
       <span data-test="editable-title-input">{value}</span>

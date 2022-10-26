@@ -59,6 +59,8 @@ import { formatColumnValue } from './utils/formatValue';
 import { PAGE_SIZE_OPTIONS } from './consts';
 import { updateExternalFormData } from './DataTable/utils/externalAPIs';
 import getScrollBarSize from './DataTable/utils/getScrollBarSize';
+// @ts-ignore
+import { translations } from '../../../translations/traslation_servies'
 
 type ValueRange = [number, number];
 
@@ -383,6 +385,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
         displayLabel = displayLabel.replace('{{projectOne}}', query.get('projectOne'));
         displayLabel = displayLabel.replace('{{projectTwo}}', query.get('projectTwo'));
         displayLabel = displayLabel.replace('{{projectThree}}', query.get('projectThree'));
+        displayLabel = translations(displayLabel);
         return displayLabel;
       };
 

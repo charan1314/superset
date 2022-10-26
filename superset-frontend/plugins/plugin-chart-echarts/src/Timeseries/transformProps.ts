@@ -83,6 +83,8 @@ import {
   AreaChartExtraControlsValue,
   TIMESERIES_CONSTANTS,
 } from '../constants';
+// @ts-ignore
+import { translations } from '../../../../translations/traslation_servies';
 
 export default function transformProps(
   chartProps: EchartsTimeseriesChartProps,
@@ -165,6 +167,13 @@ export default function transformProps(
     stack,
     totalStackedValues,
     isHorizontal,
+  });
+  // eslint-disable-next-line array-callback-return
+  rawSeries.map(series => {
+    // eslint-disable-next-line no-param-reassign
+    series.name = translations(series.name);
+    // eslint-disable-next-line no-param-reassign
+    series.id = translations(series.id);
   });
   const showValueIndexes = extractShowValueIndexes(rawSeries, {
     stack,
@@ -455,7 +464,7 @@ export default function transformProps(
   });
   let xAxis: any = {
     type: xAxisType,
-    name: xAxisTitle,
+    name: translations(xAxisTitle),
     axisTick: { show: false },
     nameGap: convertInteger(xAxisTitleMargin),
     nameLocation: 'middle',
@@ -486,7 +495,7 @@ export default function transformProps(
     minorSplitLine: { show: minorSplitLine },
     axisLabel: { formatter },
     scale: truncateYAxis,
-    name: yAxisTitle,
+    name: translations(yAxisTitle),
     nameGap: convertInteger(yAxisTitleMargin),
     nameLocation: yAxisTitlePosition === 'Left' ? 'middle' : 'end',
   };

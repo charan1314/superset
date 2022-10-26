@@ -73,6 +73,8 @@ import {
   numberOrAutoType,
   stringOrObjectWithLabelType,
 } from './PropTypes';
+// @ts-ignore
+import { translations } from '../../../translations/traslation_servies';
 
 const NO_DATA_RENDER_DATA = [
   { text: 'No data', dy: '-.75em', class: 'header' },
@@ -316,6 +318,11 @@ function nvd3Vis(element, props) {
     sliceId,
   } = props;
 
+  // eslint-disable-next-line array-callback-return
+  data.map(name => {
+    // eslint-disable-next-line no-param-reassign
+    name.key = translations(name.key);
+  });
   const isExplore = document.querySelector('#explorer-container') !== null;
   const container = element;
   container.innerHTML = '';
@@ -935,7 +942,9 @@ function nvd3Vis(element, props) {
         }
         // nvd3 bug axisLabelDistance is disregarded on xAxis
         // https://github.com/krispo/angular-nvd3/issues/90
-        chart.xAxis.axisLabel(xAxisLabel).axisLabelDistance(distance);
+        chart.xAxis
+          .axisLabel(translations(xAxisLabel))
+          .axisLabelDistance(distance);
       }
 
       if (yAxisLabel && yAxisLabel !== '' && chart.yAxis) {
@@ -943,7 +952,9 @@ function nvd3Vis(element, props) {
         if (margins.left && !Number.isNaN(margins.left)) {
           distance = margins.left - 70;
         }
-        chart.yAxis.axisLabel(yAxisLabel).axisLabelDistance(distance);
+        chart.yAxis
+          .axisLabel(translations(yAxisLabel))
+          .axisLabelDistance(distance);
       }
       if (isTimeSeries && annotationData && activeAnnotationLayers.length > 0) {
         // Time series annotations add additional data
