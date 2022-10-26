@@ -26,18 +26,20 @@ export function translations(name) {
       break;
   }
   // eslint-disable-next-line no-param-reassign
-  const stringArray = name.split('{{');
-  let substringArray;
-  let replaceString;
-  let replacedString;
-  if (stringArray.length > 0) {
-    // eslint-disable-next-line no-plusplus
-    for (let o = 1; o < stringArray.length; o++) {
-      substringArray = stringArray[o].trim().split('}}');
-      replaceString = `{{${substringArray[0]}}}`;
-      replacedString = selectedTranslation[substringArray[0]];
-      // eslint-disable-next-line no-param-reassign
-      name = name.replace(replaceString, replacedString);
+  if (name !== undefined && name !== null && typeof name === 'string') {
+    const stringArray = name.split('{{');
+    let substringArray;
+    let replaceString;
+    let replacedString;
+    if (stringArray.length > 0) {
+      // eslint-disable-next-line no-plusplus
+      for (let o = 1; o < stringArray.length; o++) {
+        substringArray = stringArray[o].trim().split('}}');
+        replaceString = `{{${substringArray[0]}}}`;
+        replacedString = selectedTranslation[substringArray[0]];
+        // eslint-disable-next-line no-param-reassign
+        name = name.replace(replaceString, replacedString);
+      }
     }
   }
   return name;
