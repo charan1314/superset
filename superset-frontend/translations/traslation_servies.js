@@ -34,7 +34,7 @@ export function translations(name) {
     if (stringArray.length > 0) {
       // eslint-disable-next-line no-plusplus
       for (let o = 1; o < stringArray.length; o++) {
-        substringArray = stringArray[o].trim().split('}}');
+        substringArray = stringArray[o].split('}}');
         replaceString = `{{${substringArray[0]}}}`;
         replacedString = selectedTranslation[substringArray[0]];
         // eslint-disable-next-line no-param-reassign
