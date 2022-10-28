@@ -25,6 +25,7 @@ import {
   SupersetPluginChartDualYAxisProps,
   SupersetPluginChartDualYAxisStylesProps,
 } from './types';
+import {translations} from '../../../../translations/traslation_servies';
 
 // The following Styles component is a <div> element, which has been styled using Emotion
 // For docs, visit https://emotion.sh/docs/styled
@@ -52,6 +53,21 @@ function SupersetPluginChartDualYAxis(
   // height and width are the height and width of the DOM element as it exists in the dashboard.
   // There is also a `data` prop, which is, of course, your DATA 🎉
   const { data, height, width, formData } = props;
+
+  function changeColumnsInData(col: string, translatedName: string) {
+    for (let a = 0; a < data.length; a++) {
+      data[a][translatedName] = data[a][col];
+      delete data[a][col];
+    }
+  }
+
+  for (let s = 0; s < formData.cols.length; s++) {
+    let translatedName = translations(formData.cols[s]);
+    if (translatedName !== formData.cols[s]) {
+      changeColumnsInData(formData.cols[s], translatedName);
+      formData.cols[s] = translatedName;
+    }
+  }
 
   const rootElem = useRef<HTMLDivElement>();
   const chartRef = useRef<ECharts>();

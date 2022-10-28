@@ -36,6 +36,7 @@ import {
   SMALL_HEADER,
   BACKGROUND_TRANSPARENT,
 } from 'src/dashboard/util/constants';
+import { translations } from '../../../../translations/traslation_servies';
 
 const propTypes = {
   id: PropTypes.string.isRequired,
@@ -117,7 +118,8 @@ class Header extends React.PureComponent {
       opt =>
         opt.value === (component.meta.background || BACKGROUND_TRANSPARENT),
     );
-
+    // header tag
+    component.meta.text = translations(component.meta.text);
     return (
       <DragDroppable
         component={component}

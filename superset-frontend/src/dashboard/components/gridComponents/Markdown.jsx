@@ -38,6 +38,7 @@ import {
   GRID_MIN_ROW_UNITS,
   GRID_BASE_UNIT,
 } from 'src/dashboard/util/constants';
+import { translations } from '../../../../translations/traslation_servies';
 
 const propTypes = {
   id: PropTypes.string.isRequired,
@@ -257,7 +258,7 @@ class Markdown extends React.PureComponent {
 
   renderPreviewMode() {
     const { hasError } = this.state;
-
+    this.state.markdownSource = translations(this.state.markdownSource);
     return (
       <SafeMarkdown
         source={
