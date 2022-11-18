@@ -22,7 +22,7 @@
   "weighted_average_15_key_summary_report": "Weighted Average 1.5⁰ pathway",
   "weighted_average_2_key_summary_report": "Weighted Average 2⁰ pathway",
   "projects_key_summary_report": "Project",
-  "x_axis_analysis_of_GHG_Emissions_key_summary_report": "",
+  "x_axis_analysis_of_GHG_Emissions_key_summary_report": "GHG intensity [kgCO2e/m²/a]",
   "y_axis_left_GHG_Emissions_key_summary_report": "GHG Emission",
   "y_axis_right_GHG_Emissions_key_summary_report": "GHG Intensity",
   " y_axis_left_GHG_Emissions_key_summary_report ": "GHG Emission",

@@ -22,7 +22,7 @@
   "weighted_average_15_key_summary_report": "PATAINE Moyenne pondérée 1,5⁰",
   "weighted_average_2_key_summary_report": "Moyenne pondérée 2⁰ voie",
   "projects_key_summary_report": "Projet",
-  "x_axis_analysis_of_GHG_Emissions_key_summary_report": "",
+  "x_axis_analysis_of_GHG_Emissions_key_summary_report": "GHG intensity [kgCO2e/m²/a]",
   "y_axis_left_GHG_Emissions_key_summary_report": "Émissions de GES",
   "y_axis_right_GHG_Emissions_key_summary_report": "Intensité des GES",
   "x_axis_GHG_Emissions_key_summary_report": "",
@@ -34,7 +34,7 @@
   "current_performance_SR_key_summary_report": "Performance actuelle",
   "after_option3_retrofit_SR_key_summary_report": "Après la mise à niveau de l'option 3",
 
-  "portfolio_report_key_portfolio_report": "Portfolio Report",
+  "portfolio_report_key_portfolio_report": "Rapport de portefeuille",
   "property_name_key_portfolio_report": "Nom de la propriété",
   "primary_address_key_portfolio_report": "Adresse principale",
   "city_key_portfolio_report": "Ville",

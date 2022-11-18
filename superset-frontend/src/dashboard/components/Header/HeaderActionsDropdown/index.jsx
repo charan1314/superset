@@ -251,7 +251,7 @@ class HeaderActionsDropdown extends React.PureComponent {
             {t('Refresh dashboard')}
           </Menu.Item>
         )}
-        {!editMode && (
+        {!editMode && getUrlParam(URL_PARAMS.isShortMenuList) && (
           <Menu.Item
             key={MENU_KEYS.TOGGLE_FULLSCREEN}
             onClick={this.handleMenuClick}
@@ -378,17 +378,19 @@ class HeaderActionsDropdown extends React.PureComponent {
             </Menu.Item>
           )}
 
-        <Menu.Item key={MENU_KEYS.AUTOREFRESH_MODAL}>
-          <RefreshIntervalModal
-            addSuccessToast={this.props.addSuccessToast}
-            refreshFrequency={refreshFrequency}
-            refreshLimit={refreshLimit}
-            refreshWarning={refreshWarning}
-            onChange={this.changeRefreshInterval}
-            editMode={editMode}
-            triggerNode={<span>{t('Set auto-refresh interval')}</span>}
-          />
-        </Menu.Item>
+        {getUrlParam('isShortMenuList') && (
+          <Menu.Item key={MENU_KEYS.AUTOREFRESH_MODAL}>
+            <RefreshIntervalModal
+              addSuccessToast={this.props.addSuccessToast}
+              refreshFrequency={refreshFrequency}
+              refreshLimit={refreshLimit}
+              refreshWarning={refreshWarning}
+              onChange={this.changeRefreshInterval}
+              editMode={editMode}
+              triggerNode={<span>{t('Set auto-refresh interval')}</span>}
+            />
+          </Menu.Item>
+        )}
       </Menu>
     );
   }
