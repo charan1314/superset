@@ -340,7 +340,7 @@ class HeaderActionsDropdown extends React.PureComponent {
             {t('Embed dashboard')}
           </Menu.Item>
         )}
-        {getUrlParam(URL_PARAMS.isLongMenuList) && (<Menu.Divider/>)}
+        {getUrlParam(URL_PARAMS.isLongMenuList) && <Menu.Divider />}
         {!editMode ? (
           this.state.showReportSubMenu ? (
             <>
