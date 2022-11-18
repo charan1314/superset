@@ -251,7 +251,7 @@ class HeaderActionsDropdown extends React.PureComponent {
             {t('Refresh dashboard')}
           </Menu.Item>
         )}
-        {!editMode && getUrlParam(URL_PARAMS.isShortMenuList) && (
+        {!editMode && getUrlParam(URL_PARAMS.isLongMenuList) && (
           <Menu.Item
             key={MENU_KEYS.TOGGLE_FULLSCREEN}
             onClick={this.handleMenuClick}
@@ -340,7 +340,7 @@ class HeaderActionsDropdown extends React.PureComponent {
             {t('Embed dashboard')}
           </Menu.Item>
         )}
-        <Menu.Divider />
+        {getUrlParam(URL_PARAMS.isLongMenuList) && (<Menu.Divider/>)}
         {!editMode ? (
           this.state.showReportSubMenu ? (
             <>
@@ -378,7 +378,7 @@ class HeaderActionsDropdown extends React.PureComponent {
             </Menu.Item>
           )}
 
-        {getUrlParam('isShortMenuList') && (
+        {getUrlParam(URL_PARAMS.isLongMenuList) && (
           <Menu.Item key={MENU_KEYS.AUTOREFRESH_MODAL}>
             <RefreshIntervalModal
               addSuccessToast={this.props.addSuccessToast}

@@ -107,8 +107,8 @@ export const URL_PARAMS = {
     name: 'dashboard_page_id',
     type: 'string',
   },
-  isShortMenuList: {
-    name: 'isShortMenuList',
+  isLongMenuList: {
+    name: 'isLongMenuList',
     type: 'boolean',
   },
 } as const;
