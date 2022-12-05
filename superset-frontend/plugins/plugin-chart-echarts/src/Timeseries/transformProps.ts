@@ -377,21 +377,21 @@ export default function transformProps(
         JSON.stringify(row.data) === JSON.stringify(cRow.data)
       ) {
         if (cRow.id === 'Option 1: Pathway 2DS - 2025') {
+          matchingArray[cRow.id] = 0.99;
+          // @ts-ignore
+          // eslint-disable-next-line array-callback-return
+          cRow.data.map(data => {
+            // eslint-disable-next-line no-param-reassign
+            data[1] *= 0.99;
+          });
+        } else {
+          // @ts-ignore
           matchingArray[cRow.id] = 0.98;
           // @ts-ignore
           // eslint-disable-next-line array-callback-return
           cRow.data.map(data => {
             // eslint-disable-next-line no-param-reassign
             data[1] *= 0.98;
-          });
-        } else {
-          // @ts-ignore
-          matchingArray[cRow.id] = 0.96;
-          // @ts-ignore
-          // eslint-disable-next-line array-callback-return
-          cRow.data.map(data => {
-            // eslint-disable-next-line no-param-reassign
-            data[1] *= 0.96;
           });
         }
       }
