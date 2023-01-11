@@ -168,10 +168,18 @@ export default function transformProps(
     totalStackedValues,
     isHorizontal,
   });
+  const translateLineChartLabels = (displayLabel: string) => {
+    const query = new URLSearchParams(window.location.href);
+    displayLabel = displayLabel.replace('{{projectOne}}', query.get('projectOne'));
+    displayLabel = displayLabel.replace('{{projectTwo}}', query.get('projectTwo'));
+    displayLabel = displayLabel.replace('{{projectThree}}', query.get('projectThree'));
+    displayLabel = translations(displayLabel);
+    return displayLabel;
+  };
   // eslint-disable-next-line array-callback-return
   rawSeries.map(series => {
     // eslint-disable-next-line no-param-reassign
-    series.name = translations(series.name);
+    series.name = translateLineChartLabels(series.name);
     // eslint-disable-next-line no-param-reassign
     series.id = translations(series.id);
   });
