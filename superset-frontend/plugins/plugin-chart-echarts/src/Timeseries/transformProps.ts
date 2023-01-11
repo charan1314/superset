@@ -34,7 +34,7 @@ import {
 } from '@superset-ui/core';
 import { isDerivedSeries } from '@superset-ui/chart-controls';
 import { EChartsCoreOption, SeriesOption } from 'echarts';
-import { ZRLineType } from 'echarts/types/src/util/types';
+import { OptionName, ZRLineType } from 'echarts/types/src/util/types';
 import {
   EchartsTimeseriesChartProps,
   EchartsTimeseriesFormData,
@@ -168,12 +168,21 @@ export default function transformProps(
     totalStackedValues,
     isHorizontal,
   });
-  const translateLineChartLabels = (displayLabel: string) => {
+  const translateLineChartLabels = (displayLabel: OptionName | undefined) => {
     const query = new URLSearchParams(window.location.href);
-    displayLabel = displayLabel.replace('{{projectOne}}', query.get('projectOne'));
-    displayLabel = displayLabel.replace('{{projectTwo}}', query.get('projectTwo'));
-    displayLabel = displayLabel.replace('{{projectThree}}', query.get('projectThree'));
-    displayLabel = translations(displayLabel);
+    const projectOne = query.get('projectOne') || 'Option 1 ';
+    const projectTwo = query.get('projectTwo') || 'Option 2 ';
+    const projectThree = query.get('projectThree') || 'Option 3 ';
+    if (typeof displayLabel === 'string') {
+      // eslint-disable-next-line no-param-reassign
+      displayLabel = displayLabel.replace('{{projectOne}}', projectOne);
+      // eslint-disable-next-line no-param-reassign
+      displayLabel = displayLabel.replace('{{projectTwo}}', projectTwo);
+      // eslint-disable-next-line no-param-reassign
+      displayLabel = displayLabel.replace('{{projectThree}}', projectThree);
+      // eslint-disable-next-line no-param-reassign
+      displayLabel = translations(displayLabel);
+    }
     return displayLabel;
   };
   // eslint-disable-next-line array-callback-return
