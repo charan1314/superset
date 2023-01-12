@@ -170,9 +170,9 @@ export default function transformProps(
   });
   const translateLineChartLabels = (displayLabel: OptionName | undefined) => {
     const query = new URLSearchParams(window.location.href);
-    const projectOne = query.get('projectOne') || 'Option 1 ';
-    const projectTwo = query.get('projectTwo') || 'Option 2 ';
-    const projectThree = query.get('projectThree') || 'Option 3 ';
+    const projectOne = query.get('projectOne') || 'Option 1';
+    const projectTwo = query.get('projectTwo') || 'Option 2';
+    const projectThree = query.get('projectThree') || 'Option 3';
     if (typeof displayLabel === 'string') {
       // eslint-disable-next-line no-param-reassign
       displayLabel = displayLabel.replace('{{projectOne}}', projectOne);
@@ -190,7 +190,7 @@ export default function transformProps(
     // eslint-disable-next-line no-param-reassign
     series.name = translateLineChartLabels(series.name);
     // eslint-disable-next-line no-param-reassign
-    series.id = translations(series.id);
+    series.id = translateLineChartLabels(series.id);
   });
   const showValueIndexes = extractShowValueIndexes(rawSeries, {
     stack,
@@ -393,7 +393,7 @@ export default function transformProps(
         row.id !== cRow.id &&
         JSON.stringify(row.data) === JSON.stringify(cRow.data)
       ) {
-        if (cRow.id === 'Option 1: Pathway 2DS - 2025') {
+        if (typeof cRow.id === 'string' && cRow.id.startsWith('Option 1')) {
           matchingArray[cRow.id] = 0.98;
           // @ts-ignore
           // eslint-disable-next-line array-callback-return
