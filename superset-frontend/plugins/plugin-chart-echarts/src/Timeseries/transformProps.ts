@@ -177,6 +177,9 @@ export default function transformProps(
     pathways = pathwayParams.split(',');
   }
   const pathwaysMapping = {
+    '{{weighted_average_15_key_summary_report}}': '1.5',
+    '{{weighted_average_2_key_summary_report}}': '2',
+    '{{regulatory_key_summary_report}}': 'Regulatory',
     '{{weighted_average_NDC_key_summary_report}}': 'NDC',
     '{{weighted_average_DNZ_key_summary_report}}': 'DNZ',
     '{{weighted_average_CP_key_summary_report}}': 'CP',
