@@ -105,6 +105,13 @@
   "description_key_property_report": "La description",
   "key_indicators_key_property_report": "Indicateurs clef",
   "Energy_key_property_report": "Énergie",
+  "NDC_key_property_report": "NDC pathway",
+  "DNZ_key_property_report": "DNZ pathway",
+  "CP_key_property_report": "CP pathway",
+  "NZ50_key_property_report": "NZ50 pathway",
+  "regulatory_key_property_report": "Regulatory Pathways",
+  "weighted_average_15_key_property_report": "Weighted Average 1.5⁰ pathway",
+  "weighted_average_2_key_property_report": "Weighted Average 2⁰ pathway",
 
   "portfolio_details_key_energy_efficiency_report": "Détails du portefeuille",
   "energy_retrofit_summary_key_energy_efficiency_report": "Résumé de la rénovation énergétique",

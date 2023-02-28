@@ -184,6 +184,13 @@ export default function transformProps(
     '{{weighted_average_DNZ_key_summary_report}}': 'DNZ',
     '{{weighted_average_CP_key_summary_report}}': 'CP',
     '{{weighted_average_NZ50_key_summary_report}}': 'NZ50',
+    '{{weighted_average_15_key_property_report}}': '1.5',
+    '{{weighted_average_2_key_property_report}}': '2',
+    '{{regulatory_key_property_report}}': 'Regulatory',
+    '{{NDC_key_property_report}}': 'NDC',
+    '{{DNZ_key_property_report}}': 'DNZ',
+    '{{CP_key_property_report}}': 'CP',
+    '{{NZ50_key_property_report}}': 'NZ50',
   };
   const translateLineChartLabels = (displayLabel: OptionName | undefined) => {
     const projectOne = urlParams.get('projectOne') || 'Option 1';
