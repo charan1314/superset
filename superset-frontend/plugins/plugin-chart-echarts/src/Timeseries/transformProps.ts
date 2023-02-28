@@ -16,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+// Line Chart
 /* eslint-disable camelcase */
 import {
   AnnotationLayer,
@@ -160,7 +162,7 @@ export default function transformProps(
       xAxisCol,
     },
   );
-  const rawSeries = extractSeries(rebasedData, {
+  let rawSeries = extractSeries(rebasedData, {
     fillNeighborValue: stack && !forecastEnabled ? 0 : undefined,
     xAxis: xAxisCol,
     removeNulls: seriesType === EchartsTimeseriesSeriesType.Scatter,
@@ -168,11 +170,22 @@ export default function transformProps(
     totalStackedValues,
     isHorizontal,
   });
+  const urlParams = new URLSearchParams(window.location.href);
+  const pathwayParams = urlParams.get('pathways');
+  let pathways: any;
+  if (pathwayParams !== null) {
+    pathways = pathwayParams.split(',');
+  }
+  const pathwaysMapping = {
+    '{{weighted_average_NDC_key_summary_report}}': 'NDC',
+    '{{weighted_average_DNZ_key_summary_report}}': 'DNZ',
+    '{{weighted_average_CP_key_summary_report}}': 'CP',
+    '{{weighted_average_NZ50_key_summary_report}}': 'NZ50',
+  };
   const translateLineChartLabels = (displayLabel: OptionName | undefined) => {
-    const query = new URLSearchParams(window.location.href);
-    const projectOne = query.get('projectOne') || 'Option 1';
-    const projectTwo = query.get('projectTwo') || 'Option 2';
-    const projectThree = query.get('projectThree') || 'Option 3';
+    const projectOne = urlParams.get('projectOne') || 'Option 1';
+    const projectTwo = urlParams.get('projectTwo') || 'Option 2';
+    const projectThree = urlParams.get('projectThree') || 'Option 3';
     if (typeof displayLabel === 'string') {
       // eslint-disable-next-line no-param-reassign
       displayLabel = displayLabel.replace('{{projectOne}}', projectOne);
@@ -185,6 +198,15 @@ export default function transformProps(
     }
     return displayLabel;
   };
+  rawSeries = rawSeries.filter(item => {
+    if (pathwaysMapping.hasOwnProperty(item.id || '')) {
+      if (pathways.includes(pathwaysMapping[item.id || ''])) {
+        return true;
+      }
+      return false;
+    }
+    return true;
+  });
   // eslint-disable-next-line array-callback-return
   rawSeries.map(series => {
     // eslint-disable-next-line no-param-reassign

@@ -37,6 +37,10 @@
   "y_axis_value_of_stranded_key_summary_report": "",
   "current_performance_SR_key_summary_report": "Performance actuelle",
   "after_option3_retrofit_SR_key_summary_report": "Après la mise à niveau de l'option 3",
+  "weighted_average_NDC_key_summary_report": "Weighted Average NDC pathway",
+  "weighted_average_DNZ_key_summary_report": "Weighted Average DNZ pathway",
+  "weighted_average_CP_key_summary_report": "Weighted Average CP pathway",
+  "weighted_average_NZ50_key_summary_report": "Weighted Average NZ50 pathway",
 
   "portfolio_report_key_portfolio_report": "Rapport de portefeuille",
   "property_name_key_portfolio_report": "Nom de la propriété",
