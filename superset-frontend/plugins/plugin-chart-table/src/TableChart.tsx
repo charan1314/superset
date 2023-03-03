@@ -187,7 +187,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     sticky?: DataTableProps<D>['sticky'];
   },
 ) {
-  const {
+  let {
     timeGrain,
     height,
     width,
@@ -211,6 +211,37 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     columnColorFormatters,
     allowRearrangeColumns = false,
   } = props;
+  const queryParams = new URLSearchParams(window.location.href);
+
+  function deleteColumns () {
+    let deleteColumn = [];
+    for (let q = 0; q < 5; q++) {
+      if (queryParams.get('filter' + (q+1)) === "") {
+        deleteColumn.push("custom_filter_" + (q+1));
+      }
+    }
+
+    let dummyColumnMeta = columnsMeta;
+    deleteColumn.map(filter => {
+      for (let i = 0; i < data.length; i++) {
+        let item = data[i];
+        if (item.hasOwnProperty(filter)) {
+          delete item[filter];
+        }
+        data[i] = item;
+      }
+
+      for (let c = 0; c < dummyColumnMeta.length; c++) {
+        let columnItem = dummyColumnMeta[c];
+        if (columnItem.key === filter) {
+          columnsMeta.splice(c, 1);
+        }
+      }
+    });
+  }
+
+  deleteColumns()
+
   const timestampFormatter = useCallback(
     value => getTimeFormatterForGranularity(timeGrain)(value),
     [timeGrain],
@@ -380,12 +411,16 @@ export default function TableChart<D extends DataRecord = DataRecord>(
         className += ' dt-is-filter';
       }
       const setHeaders = label => {
-        const query = new URLSearchParams(window.location.href);
-        let displayLabel = label.replace('{{unit}}', query.get('displayUnit'));
-        displayLabel = displayLabel.replace('{{currencySymbol}}', query.get('symbol'));
-        displayLabel = displayLabel.replace('{{projectOne}}', query.get('projectOne'));
-        displayLabel = displayLabel.replace('{{projectTwo}}', query.get('projectTwo'));
-        displayLabel = displayLabel.replace('{{projectThree}}', query.get('projectThree'));
+        let displayLabel = label.replace('{{unit}}', queryParams.get('displayUnit'));
+        displayLabel = displayLabel.replace('{{currencySymbol}}', queryParams.get('symbol'));
+        displayLabel = displayLabel.replace('{{projectOne}}', queryParams.get('projectOne'));
+        displayLabel = displayLabel.replace('{{projectTwo}}', queryParams.get('projectTwo'));
+        displayLabel = displayLabel.replace('{{projectThree}}', queryParams.get('projectThree'));
+        displayLabel = displayLabel.replace('custom_filter_1', queryParams.get('filter1'));
+        displayLabel = displayLabel.replace('custom_filter_2', queryParams.get('filter2'));
+        displayLabel = displayLabel.replace('custom_filter_3', queryParams.get('filter3'));
+        displayLabel = displayLabel.replace('custom_filter_4', queryParams.get('filter4'));
+        displayLabel = displayLabel.replace('custom_filter_5', queryParams.get('filter5'));
         displayLabel = translations(displayLabel);
         return displayLabel;
       };
