@@ -421,7 +421,8 @@ export default function transformProps(
 
   function checkArrayEqual(arr1: any[], arr2: any[]) {
     return (
-      Array.isArray(arr1) && Array.isArray(arr2) &&
+      Array.isArray(arr1) &&
+      Array.isArray(arr2) &&
       arr1.length === arr2.length &&
       arr1.every((val, index) => val[1] === arr2[index][1])
     );
