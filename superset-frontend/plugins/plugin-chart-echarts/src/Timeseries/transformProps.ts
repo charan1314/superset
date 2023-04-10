@@ -192,22 +192,23 @@ export default function transformProps(
     '{{CP_key_property_report}}': 'CP',
     '{{NZ50_key_property_report}}': 'NZ50',
   };
+  const projectOne = urlParams.get('projectOne') || 'Option 1';
+  const projectTwo = urlParams.get('projectTwo') || 'Option 2';
+  const projectThree = urlParams.get('projectThree') || 'Option 3';
   const translateLineChartLabels = (displayLabel: OptionName | undefined) => {
-    const projectOne = urlParams.get('projectOne') || 'Option 1';
-    const projectTwo = urlParams.get('projectTwo') || 'Option 2';
-    const projectThree = urlParams.get('projectThree') || 'Option 3';
     if (typeof displayLabel === 'string') {
       // eslint-disable-next-line no-param-reassign
-      displayLabel = displayLabel.replace('{{projectOne}}', projectOne);
+      displayLabel = displayLabel.replace('{{project1}}', projectOne);
       // eslint-disable-next-line no-param-reassign
-      displayLabel = displayLabel.replace('{{projectTwo}}', projectTwo);
+      displayLabel = displayLabel.replace('{{project2}}', projectTwo);
       // eslint-disable-next-line no-param-reassign
-      displayLabel = displayLabel.replace('{{projectThree}}', projectThree);
+      displayLabel = displayLabel.replace('{{project3}}', projectThree);
       // eslint-disable-next-line no-param-reassign
       displayLabel = translations(displayLabel);
     }
     return displayLabel;
   };
+
   rawSeries = rawSeries.filter(item => {
     if (pathwaysMapping.hasOwnProperty(item.id || '')) {
       if (pathways.includes(pathwaysMapping[item.id || ''])) {
@@ -217,6 +218,7 @@ export default function transformProps(
     }
     return true;
   });
+
   // eslint-disable-next-line array-callback-return
   rawSeries.map(series => {
     // eslint-disable-next-line no-param-reassign
@@ -415,36 +417,68 @@ export default function transformProps(
       cap: 'butt',
     },
   };
+  const projectData = {};
 
-  const matchingArray = {};
-  // eslint-disable-next-line array-callback-return
-  series.map(row => {
-    // eslint-disable-next-line array-callback-return
-    series.map(cRow => {
-      if (
-        row.id !== cRow.id &&
-        JSON.stringify(row.data) === JSON.stringify(cRow.data)
-      ) {
-        if (typeof cRow.id === 'string' && cRow.id.startsWith('Option 1')) {
-          matchingArray[cRow.id] = 0.98;
-          // @ts-ignore
-          // eslint-disable-next-line array-callback-return
-          cRow.data.map(data => {
-            // eslint-disable-next-line no-param-reassign
-            data[1] *= 0.98;
-          });
-        } else {
-          // @ts-ignore
-          matchingArray[cRow.id] = 0.96;
-          // @ts-ignore
-          // eslint-disable-next-line array-callback-return
-          cRow.data.map(data => {
-            // eslint-disable-next-line no-param-reassign
-            data[1] *= 0.96;
-          });
-        }
+  function checkArrayEqual(arr1: any[], arr2: any[]) {
+    return (
+      arr1.length === arr2.length &&
+      arr1.every((val, index) => val[1] === arr2[index][1])
+    );
+  }
+
+  series.forEach(object => {
+    [projectOne, projectTwo, projectThree].forEach(project => {
+      if (object.id === project) {
+        projectData[project] = object.data;
       }
     });
+  });
+
+  let equalArrays: string | any[] = [];
+  if (
+    checkArrayEqual(projectData[projectOne], projectData[projectTwo]) &&
+    checkArrayEqual(projectData[projectOne], projectData[projectThree])
+  ) {
+    equalArrays = [projectOne, projectTwo, projectThree];
+  } else if (
+    checkArrayEqual(projectData[projectOne], projectData[projectTwo])
+  ) {
+    equalArrays = [projectOne, projectTwo];
+  } else if (
+    checkArrayEqual(projectData[projectOne], projectData[projectThree])
+  ) {
+    equalArrays = [projectOne, projectThree];
+  } else if (
+    checkArrayEqual(projectData[projectTwo], projectData[projectThree])
+  ) {
+    equalArrays = [projectTwo, projectThree];
+  }
+
+  const matchingArray = {};
+  function increasePlotValues(row: any, factor: number) {
+    // @ts-ignore
+    matchingArray[row.id] = factor;
+    // @ts-ignore
+    // eslint-disable-next-line array-callback-return
+    row.data.map((data: number[]) => {
+      // eslint-disable-next-line no-param-reassign
+      data[1] *= factor;
+    });
+  }
+
+  // eslint-disable-next-line array-callback-return
+  series.map((row, index) => {
+    if (equalArrays.length === 2 && row.id === equalArrays[1]) {
+      increasePlotValues(row, 0.98);
+    }
+    if (equalArrays.length === 3) {
+      if (row.id === equalArrays[1]) {
+        increasePlotValues(row, 0.98);
+      }
+      if (row.id === equalArrays[2]) {
+        increasePlotValues(row, 0.96);
+      }
+    }
   });
 
   const tooltipValueFix = (key: string, value: number | undefined) => {
