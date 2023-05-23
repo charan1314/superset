@@ -140,7 +140,7 @@ const SliceHeader: FC<SliceHeaderProps> = ({
         <Tooltip title={headerTooltip}>
           <EditableTitle
             title={
-              translations(sliceName) ||
+              sliceName ||
               (editMode
                 ? '---' // this makes an empty title clickable
                 : '')

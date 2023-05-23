@@ -37,12 +37,12 @@ export function translations(name) {
     'custom_filter_3': queryParams.get('filter3'),
     'custom_filter_4': queryParams.get('filter4'),
     'custom_filter_5': queryParams.get('filter5'),
-    '{{sf_m2_unit}}': queryParams.get('units') === 'm2' ? 'SF' : 'M2',
-    '{{kbtu_kwh_unit}}': queryParams.get('units') === 'm2' ? 'kWh/m2' : 'kBtu/SF',
-    '{{MBtu_Mwh_unit}}': queryParams.get('units') === 'm2' ? 'Mwh' : 'MBtu',
+    '{{sf_m2_unit}}': queryParams.get('units') === 'me' ? 'M2' : 'SF',
+    '{{kbtu_kwh_unit}}': queryParams.get('units') === 'me' ? 'kWh/m2' : 'kBtu/SF',
+    '{{MBtu_Mwh_unit}}': queryParams.get('units') === 'me' ? 'Mwh' : 'MBtu',
     '{{MtCo2e_unit}}': 'MtCo2e',
-    '{{SF_M2_header_unit}}': queryParams.get('units') === 'm2' ? 'M2' : 'Square',
-    '{{SquareFeet_M2_header_unit}}': queryParams.get('units') === 'm2' ? 'M2' : 'Square Feet',
+    '{{SF_M2_header_unit}}': queryParams.get('units') === 'me' ? 'M2' : 'Square',
+    '{{SquareFeet_M2_header_unit}}': queryParams.get('units') === 'me' ? 'M2' : 'Square Feet',
   };
 
   let displayName = name;
