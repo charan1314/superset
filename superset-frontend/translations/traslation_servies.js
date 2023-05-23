@@ -39,9 +39,10 @@ export function translations(name) {
     'custom_filter_5': queryParams.get('filter5'),
     '{{sf_m2_unit}}': queryParams.get('units') === 'm2' ? 'SF' : 'M2',
     '{{kbtu_kwh_unit}}': queryParams.get('units') === 'm2' ? 'kWh/m2' : 'kBtu/SF',
-    '{{MBtu_Mwh_unit}}': queryParams.get('units') === 'm2' ? 'kWh/m2' : 'kBtu/SF',
+    '{{MBtu_Mwh_unit}}': queryParams.get('units') === 'm2' ? 'Mwh' : 'MBtu',
     '{{MtCo2e_unit}}': 'MtCo2e',
     '{{SF_M2_header_unit}}': queryParams.get('units') === 'm2' ? 'M2' : 'Square',
+    '{{SquareFeet_M2_header_unit}}': queryParams.get('units') === 'm2' ? 'M2' : 'Square Feet',
   };
 
   let displayName = name;
