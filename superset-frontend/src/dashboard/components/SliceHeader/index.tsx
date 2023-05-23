@@ -40,6 +40,7 @@ import FilterIndicator from 'src/dashboard/components/FiltersBadge/FilterIndicat
 import { getSliceHeaderTooltip } from 'src/dashboard/util/getSliceHeaderTooltip';
 import { DashboardPageIdContext } from 'src/dashboard/containers/DashboardPage';
 import { clearDataMask } from 'src/dataMask/actions';
+import { translations } from '../../../../translations/traslation_servies';
 
 type SliceHeaderProps = SliceHeaderControlsProps & {
   innerRef?: string;
@@ -139,7 +140,7 @@ const SliceHeader: FC<SliceHeaderProps> = ({
         <Tooltip title={headerTooltip}>
           <EditableTitle
             title={
-              sliceName ||
+              translations(sliceName) ||
               (editMode
                 ? '---' // this makes an empty title clickable
                 : '')

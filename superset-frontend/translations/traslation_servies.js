@@ -7,6 +7,7 @@ export function translations(name) {
   const frenchDictionary = require('./frenchDictionary.json');
   // eslint-disable-next-line react-hooks/rules-of-hooks
 
+  const queryParams = new URLSearchParams(window.location.href);
   const paramsss = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
   });
@@ -25,9 +26,32 @@ export function translations(name) {
     default:
       break;
   }
+  const placeholders = {
+    '{{unit}}': queryParams.get('units'),
+    '{{currencySymbol}}': queryParams.get('symbol'),
+    '{{projectOne}}': queryParams.get('projectOne'),
+    '{{projectTwo}}': queryParams.get('projectTwo'),
+    '{{projectThree}}': queryParams.get('projectThree'),
+    'custom_filter_1': queryParams.get('filter1'),
+    'custom_filter_2': queryParams.get('filter2'),
+    'custom_filter_3': queryParams.get('filter3'),
+    'custom_filter_4': queryParams.get('filter4'),
+    'custom_filter_5': queryParams.get('filter5'),
+    '{{sf_m2_unit}}': queryParams.get('units') === 'm2' ? 'SF' : 'M2',
+    '{{kbtu_kwh_unit}}': queryParams.get('units') === 'm2' ? 'kWh/m2' : 'kBtu/SF',
+    '{{MBtu_Mwh_unit}}': queryParams.get('units') === 'm2' ? 'kWh/m2' : 'kBtu/SF',
+    '{{MtCo2e_unit}}': 'MtCo2e',
+    '{{SF_M2_header_unit}}': queryParams.get('units') === 'm2' ? 'M2' : 'Square',
+  };
+
+  let displayName = name;
   // eslint-disable-next-line no-param-reassign
   if (name !== undefined && name !== null && typeof name === 'string') {
-    const stringArray = name.split('{{');
+    // eslint-disable-next-line no-restricted-syntax
+    for (const placeholder in placeholders) {
+      displayName = displayName.replace(placeholder, placeholders[placeholder]);
+    }
+    const stringArray = displayName.split('{{');
     let substringArray;
     let replaceString;
     let replacedString;
@@ -37,10 +61,9 @@ export function translations(name) {
         substringArray = stringArray[o].split('}}');
         replaceString = `{{${substringArray[0]}}}`;
         replacedString = selectedTranslation[substringArray[0]];
-        // eslint-disable-next-line no-param-reassign
-        name = name.replace(replaceString, replacedString);
+        displayName = displayName.replace(replaceString, replacedString);
       }
     }
   }
-  return name;
+  return displayName;
 }
