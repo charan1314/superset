@@ -26,6 +26,9 @@ export function translations(name) {
     default:
       break;
   }
+  const selectedDegreeScenarios = queryParams.get('degreeScenarios');
+  const selectedTargetYear = queryParams.get('targetYear');
+
   const placeholders = {
     '{{unit}}': queryParams.get('units'),
     '{{currencySymbol}}': queryParams.get('symbol'),
@@ -43,8 +46,27 @@ export function translations(name) {
     '{{MtCo2e_unit}}': 'MtCO2e',
     '{{SF_M2_header_unit}}': queryParams.get('units') === 'me' ? 'Square Meter' : 'Square',
     '{{SquareFeet_M2_header_unit}}': queryParams.get('units') === 'me' ? 'Square Meter' : 'Square Feet',
+    '{{first_degree_scenarios_intensity}}': "null",
+    '{{second_degree_scenarios_intensity}}': "null",
+    '{{third_degree_scenarios_intensity}}': "null",
+    '{{first_target_year_intensity}}': "null",
+    '{{second_target_year_intensity}}': "null",
+    '{{third_target_year_intensity}}': "null",
   };
 
+  if (selectedDegreeScenarios !== null) {
+    const selectedScenarios = selectedDegreeScenarios.split(',');
+    placeholders['{{first_degree_scenarios_intensity}}'] = selectedScenarios[0];
+    placeholders['{{second_degree_scenarios_intensity}}'] = selectedScenarios[1];
+    placeholders['{{third_degree_scenarios_intensity}}'] = selectedScenarios[2];
+  }
+
+  if (selectedTargetYear !== null) {
+    const selectedYear = selectedTargetYear.split(',');
+    placeholders['{{first_target_year_intensity}}'] = selectedYear[0];
+    placeholders['{{second_target_year_intensity}}'] = selectedYear[1];
+    placeholders['{{third_target_year_intensity}}'] = selectedYear[2];
+  }
   let displayName = name;
   // eslint-disable-next-line no-param-reassign
   if (name !== undefined && name !== null && typeof name === 'string') {
