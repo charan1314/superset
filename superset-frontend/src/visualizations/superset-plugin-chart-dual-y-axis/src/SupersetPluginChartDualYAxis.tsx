@@ -78,7 +78,7 @@ function SupersetPluginChartDualYAxis(
   const barChartConfig = (name: any) => ({
     nameLocation: 'center',
     nameTextStyle: {
-      padding: [0, 0, 25, 0],
+      padding: [0, 0, 15, 0],
     },
     type: 'value',
     name,
@@ -166,6 +166,9 @@ function SupersetPluginChartDualYAxis(
     },
     legend: {
       data: [...formData.cols, ...formData.xValues],
+    },
+    textStyle: {
+      color: 'black'
     },
     xAxis: [],
     yAxis: [],
