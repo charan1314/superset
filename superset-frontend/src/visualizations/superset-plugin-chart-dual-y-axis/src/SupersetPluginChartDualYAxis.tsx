@@ -105,7 +105,7 @@ function SupersetPluginChartDualYAxis(
   const lineChartConfig = (name: any) => ({
     nameLocation: 'center',
     nameTextStyle: {
-      padding: [10, 0, 0, 0],
+      padding: [14, 0, 0, 0],
     },
     type: 'value',
     name,
